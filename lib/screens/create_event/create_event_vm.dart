@@ -17,7 +17,17 @@ class CreateEventViewModel extends BaseViewModel {
   final formKey = GlobalKey<FormState>();
   CreateEventViewModel(this.context, this.model) {
     print(model);
+    if (model != null) {
+      removeTimeFromDate(model!.followupDateTime!);
+    }
   }
+
+  removeTimeFromDate(String dateTimeString) {
+    // Remove the last eight characters from the string (the period, the two digits representing the hundredths of a second, and the four digits representing the milliseconds)
+    model!.followupDateTime =
+        dateTimeString.substring(0, dateTimeString.length - 8);
+  }
+
   TextEditingController noteController = TextEditingController();
   TextEditingController hourController = TextEditingController();
   TextEditingController minuteController = TextEditingController();
@@ -28,8 +38,8 @@ class CreateEventViewModel extends BaseViewModel {
   String formattedDateTime = '';
   // ContactPicker contactPicker = ContactPicker();
   Contact? contact;
-  String dateFormated = '';
-  String contactNo = '';
+  String dateFormated = 'Select Date';
+  String contactNo = 'Import Contact';
   String note = '';
   String name = '';
 
@@ -62,6 +72,7 @@ class CreateEventViewModel extends BaseViewModel {
     formattedDateTime =
         DateFormat("yyyy-MM-dd ${hourController.text}:${minuteController.text}")
             .format(selectedDate!);
+    notifyListeners();
   }
 
   // late List<Contact> _contacts;
@@ -149,7 +160,7 @@ class CreateEventViewModel extends BaseViewModel {
     var eventRequest = {
       "event_occur": dropdownValue1,
       "followup_occur": dropdownValue2,
-      "note": noteController.text,
+      "note": note,
       "followup_date_time": formattedDateTime,
       "priority": dropdownValue3,
       "name": contact!.displayName,
@@ -157,7 +168,6 @@ class CreateEventViewModel extends BaseViewModel {
     };
 
     print(eventRequest);
-
     Event event = Event.fromJson(eventRequest);
     print(event);
 

@@ -98,36 +98,35 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                     child: Row(
                       children: [
                         Expanded(
-                          child: DropdownButtonFormField<String>(
-                            value: viewModel.dropdownValue1,
+                          child: DropdownButton<String>(
+                            value: model == null
+                                ? selectedEvent
+                                : model!.eventOccur,
+                            // value: viewModel.dropdownValue1,
 
                             onChanged: (String? newValue) {
-                              viewModel.dropdownValue1 = newValue!;
-                              // if (model != null) {
-                              //   model!.eventOccur = newValue!;
-                              //   viewModel.notifyListeners();
-                              // } else {
-                              //   selectedEvent = newValue!;
-                              //   viewModel.notifyListeners();
-                              // }
+                              // viewModel.dropdownValue1 = newValue!;
+                              viewModel.notifyListeners();
+                              if (model != null) {
+                                model!.eventOccur = newValue;
+                                viewModel.notifyListeners();
+                              } else {
+                                selectedEvent = newValue;
+                                viewModel.dropdownValue1 = newValue!;
+                                viewModel.notifyListeners();
+                              }
                             },
                             // icon: const Icon(Icons.arrow_drop_down),
                             icon:
                                 SvgPicture.asset('assets/icons/down_arrow.svg'),
                             iconSize: 24,
-                            // underline: const SizedBox.shrink(),
+                            underline: const SizedBox.shrink(),
                             style: const TextStyle(
                                 color: Color(0xffAFAEAE), fontSize: 16),
 
                             isExpanded: true,
-                            items: [
-                              'How event occured?',
-                              'Call',
-                              'Email',
-                              'Letter',
-                              'Text',
-                              'Appointment'
-                            ].map<DropdownMenuItem<String>>((String value) {
+                            items: events
+                                .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(value),
@@ -144,27 +143,28 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                 SizedBox(
                   height: 6 * 24.0,
                   child: EncoreTextField(
+                    initialValue: model == null ? '' : model!.note,
                     hintText: 'Add notes',
                     maxLine: 7,
-                    // onSaved: (note) {
-                    //   viewModel.note = note!;
-                    //   print(viewModel.note);
-                    // },
-                    controller: viewModel.noteController,
+                    onSaved: (note) {
+                      model == null
+                          ? viewModel.note = note!
+                          : model!.note != note;
+                      print(viewModel.note);
+                    },
+
+                    // controller: viewModel.noteController,
 
                     // style: EncoreStyles.textFieldHint
                     //     .copyWith(color: const Color(0xffAFAEAE)),
                   ),
                 ),
                 const SizedBox(height: 24),
-                _card(
-                    viewModel.contactNo == ''
-                        ? 'Import Contact'
-                        : viewModel.contactNo,
+                _card(model == null ? viewModel.contactNo : model!.phone!,
                     'contacts', onTap: () async {
                   // viewModel.selectContact(context);
                   viewModel.contact = await viewModel.pickContact();
-
+                  // model!.phone = viewModel.contact!.phones!.first.value!;
                   viewModel.contactNo = viewModel.contact!.phones!.first.value!;
                   viewModel.notifyListeners();
                 }),
@@ -182,9 +182,9 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                   child: Row(
                     children: [
                       EncoreDatePicker(
-                          title: viewModel.dateFormated == ''
-                              ? 'Select Date'
-                              : viewModel.dateFormated,
+                          title: model == null
+                              ? viewModel.dateFormated
+                              : model!.followupDateTime!,
                           onGetDate: (date) {
                             print(date);
                             viewModel.setDate(date!);
@@ -262,16 +262,19 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                     child: Row(
                       children: [
                         Expanded(
-                          child: DropdownButtonFormField<String>(
+                          child: DropdownButton<String>(
                             value: model == null
                                 ? selectedFollowUp
                                 : model!.followupOccur,
+                            // value: viewModel.dropdownValue2,
                             onChanged: (String? newValue) {
+                              // viewModel.dropdownValue2 = newValue!;
                               if (model != null) {
                                 model!.followupOccur = newValue!;
                                 viewModel.notifyListeners();
                               } else {
                                 selectedFollowUp = newValue!;
+                                viewModel.dropdownValue2 = newValue;
                                 viewModel.notifyListeners();
                               }
                             },
@@ -279,7 +282,7 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                             icon:
                                 SvgPicture.asset('assets/icons/down_arrow.svg'),
                             iconSize: 24,
-                            // underline: const SizedBox.shrink(),
+                            underline: const SizedBox.shrink(),
                             style: const TextStyle(
                                 color: Color(0xffAFAEAE), fontSize: 16),
 
@@ -318,16 +321,19 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        DropdownButtonFormField<String>(
+                        DropdownButton<String>(
                           value: model == null
                               ? selectedPriority
                               : model!.priority,
+                          // value: viewModel.dropdownValue3,
                           onChanged: (String? newValue) {
+                            // viewModel.dropdownValue3 = newValue!;
                             if (model != null) {
                               model!.priority = newValue!;
                               viewModel.notifyListeners();
                             } else {
                               selectedPriority = newValue!;
+                              viewModel.dropdownValue3 = newValue;
                               viewModel.notifyListeners();
                             }
                           },
@@ -338,7 +344,7 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                                 SvgPicture.asset('assets/icons/down_arrow.svg'),
                           ),
                           iconSize: 24,
-                          // underline: const SizedBox.shrink(),
+                          underline: const SizedBox.shrink(),
                           style: const TextStyle(
                               color: Color(0xffAFAEAE), fontSize: 16),
 
@@ -366,10 +372,18 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
         backgroundColor: EncoreStyles.primaryColor,
         //Floating action button on Scaffold
         onPressed: () async {
+          viewModel.formKey.currentState!.validate();
+          viewModel.formKey.currentState!.save();
+          if (viewModel.contact != null) {
+            viewModel.name = viewModel.getName(viewModel.contact!.displayName!);
+          }
+          if (viewModel.selectedDate != null) {
+            viewModel.getDateTime();
+          }
           if (viewModel.dropdownValue1 == 'How event occured?' ||
-              viewModel.noteController.text == '' ||
-              // viewModel.name == '' ||
-              // viewModel.formattedDateTime == '' ||
+              viewModel.note == '' ||
+              viewModel.name == '' ||
+              viewModel.formattedDateTime == '' ||
               viewModel.dropdownValue2 == 'How Follow-up occured?' ||
               viewModel.dropdownValue3 == 'Priority') {
             EncoreDialogs.showErrorAlert(
@@ -380,11 +394,9 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
               onConfirm: () => Navigator.pop(context),
             );
           } else {
-            viewModel.name = viewModel.getName(viewModel.contact!.displayName!);
-            viewModel.getDateTime();
-            viewModel.formKey.currentState!.validate();
-            viewModel.formKey.currentState!.save();
-
+            // viewModel.name = viewModel.getName(viewModel.contact!.displayName!);
+            // viewModel.getDateTime();
+            print('object');
             await viewModel.createEvent();
           }
 
@@ -452,7 +464,7 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
 
   @override
   CreateEventViewModel viewModelBuilder(BuildContext context) {
-    CreateEventViewModel vm = CreateEventViewModel(context, model);
+    // CreateEventViewModel vm = CreateEventViewModel(context);
     return CreateEventViewModel(context, model);
   }
 }

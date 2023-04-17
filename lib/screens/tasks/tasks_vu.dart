@@ -83,7 +83,7 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
                         child: ListView.builder(
                           itemCount: viewModel.followUpList.length,
                           itemBuilder: (context, index) =>
-                              lowerContainer2(viewModel, index),
+                              lowerContainer2(viewModel, index, context),
                         ),
                       ),
                     ]),
@@ -589,13 +589,18 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
     );
   }
 
-  Widget lowerContainer2(TasksViewModel vm, int index) {
+  Widget lowerContainer2(TasksViewModel vm, int index, BuildContext context) {
     vm.followUpList[index].name = vm.getName(vm.followUpList[index].name!);
     vm.followUpDateTime = vm.removeLastTwoZerosAndPreviousColumn(
         vm.followUpList[index].followupDateTime!);
     return GestureDetector(
       onTap: () {
         print('follow up');
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    CreateEventScreen(vm.followUpList[index])));
       },
       child: Container(
           // height: 48,
