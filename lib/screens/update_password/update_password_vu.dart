@@ -32,7 +32,10 @@ class UpdatePasswordScreen
                 const SizedBox(height: 24),
                 Align(
                     alignment: Alignment.center,
-                    child: SvgPicture.asset('assets/icons/encore_icon.svg')),
+                    child: Image.asset(
+                      'assets/icons/encore-logo.png',
+                      scale: 3.5,
+                    )),
                 const SizedBox(height: 41),
                 Align(
                   alignment: Alignment.center,
