@@ -15,11 +15,90 @@ import 'package:stacked/stacked.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
-  const TasksScreen({super.key});
+  TasksScreen({super.key});
+  final List<Map<String, dynamic>> data = [
+    {
+      "ticketNo": "12345",
+      "date": "2023-04-20",
+      "time": "10:30:00",
+      "agent": "John",
+      "action": "Resolved",
+      "priority": "High"
+    },
+    {
+      "ticketNo": "67890",
+      "date": "2023-04-21",
+      "time": "11:45:00",
+      "agent": "Jane",
+      "action": "In Progress",
+      "priority": "Medium"
+    },
+    {
+      "ticketNo": "24680",
+      "date": "2023-04-22",
+      "time": "09:15:00",
+      "agent": "Bob",
+      "action": "New",
+      "priority": "Low"
+    },
+  ];
 
   @override
   Widget builder(
       BuildContext context, TasksViewModel viewModel, Widget? child) {
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text('My List'),
+    //   ),
+    //   body: Column(
+    //     crossAxisAlignment: CrossAxisAlignment.stretch,
+    //     children: [
+    //       Padding(
+    //         padding: const EdgeInsets.all(8.0),
+    //         child: Row(
+    //           children: [
+    //             for (var key in data.first.keys)
+    //               Expanded(
+    //                 flex: 1,
+    //                 child: Text(
+    //                   '$key:',
+    //                   style: TextStyle(
+    //                     fontWeight: FontWeight.bold,
+    //                     color: Colors.grey[600],
+    //                   ),
+    //                 ),
+    //               ),
+    //           ],
+    //         ),
+    //       ),
+    //       Divider(),
+    //       Expanded(
+    //         child: ListView.builder(
+    //           itemCount: data.length,
+    //           itemBuilder: (context, index) {
+    //             return Padding(
+    //               padding: const EdgeInsets.all(8.0),
+    //               child: Row(
+    //                 children: [
+    //                   for (var entry in data[index].entries)
+    //                     Expanded(
+    //                       flex: 1,
+    //                       child: Text(
+    //                         '${entry.value}',
+    //                         style: TextStyle(
+    //                           color: Colors.grey[800],
+    //                         ),
+    //                       ),
+    //                     ),
+    //                 ],
+    //               ),
+    //             );
+    //           },
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
     return WillPopScope(
       onWillPop: () async {
         EncoreDialogs.showErrorAlert(
@@ -39,7 +118,6 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
             addBackButton: false,
             title: 'encor',
             actions: [
-              // ActionButton(icon: 'assets/icons/bell_icon.svg'),
               const SizedBox(width: 12),
               ActionButton(
                 icon: 'assets/icons/profile.svg',
@@ -61,19 +139,20 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8, 40, 8, 0),
-                    child: Column(children: [
-                      upperContainer1(),
-                      const SizedBox(height: 12),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: viewModel.eventsList.length,
-                          itemBuilder: (context, index) =>
-                              lowerContainer1(viewModel, index, context),
-                        ),
-                      ),
-                    ]),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          upperContainer1(),
+                          const SizedBox(height: 12),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: viewModel.eventsList.length,
+                              itemBuilder: (context, index) =>
+                                  lowerContainer1(viewModel, index, context),
+                            ),
+                          ),
+                        ]),
                   ),
-
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8, 40, 8, 0),
                     child: Column(children: [
@@ -88,150 +167,8 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
                       ),
                     ]),
                   ),
-
-                  // Container(
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       Expanded(
-                  //         child: Row(
-                  //           children: [
-                  //             Expanded(
-                  //               child: Text('TicketNi'),
-                  //             ),
-                  //             Expanded(
-                  //               child: Text('date'),
-                  //             ),
-                  //             Expanded(
-                  //               child: Text('time'),
-                  //             ),
-                  //             Expanded(
-                  //               child: Text('agent'),
-                  //             ),
-                  //             Expanded(
-                  //               child: Text('action'),
-                  //             ),
-                  //             Expanded(
-                  //               child: Text('priority'),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //       Expanded(
-                  //         child: ListView.builder(
-                  //           itemCount: viewModel.followUpList.length,
-                  //           itemBuilder: (BuildContext context, int index) {
-                  //             return DataTable(
-                  //               columns: [
-                  //                 DataColumn(
-                  //                   label: Text('TicketNi'),
-                  //                 ),
-                  //                 DataColumn(
-                  //                   label: Text('date'),
-                  //                 ),
-                  //                 DataColumn(
-                  //                   label: Text('time'),
-                  //                 ),
-                  //                 DataColumn(
-                  //                   label: Text('agent'),
-                  //                 ),
-                  //                 DataColumn(
-                  //                   label: Text('action'),
-                  //                 ),
-                  //                 DataColumn(
-                  //                   label: Text('priority'),
-                  //                 ),
-                  //               ],
-                  //               rows: [
-                  //                 DataRow(
-                  //                   cells: [
-                  //                     DataCell(
-                  //                       Text('725615'),
-                  //                       // overflow: TextOverflow.ellipsis,
-                  //                     ),
-                  //                     DataCell(
-                  //                       Text(viewModel.followUpList[index]
-                  //                           .followupDateTime!),
-                  //                       // overflow: TextOverflow.ellipsis,
-                  //                     ),
-                  //                     DataCell(
-                  //                       Text(viewModel
-                  //                           .followUpList[index].name!),
-                  //                       // overflow: TextOverflow.ellipsis,
-                  //                     ),
-                  //                     DataCell(Text(
-                  //                       viewModel
-                  //                           .followUpList[index].followupOccur!,
-                  //                     )
-                  //                         // overflow: TextOverflow.ellipsis,
-                  //                         ),
-                  //                     DataCell(
-                  //                       Text(viewModel
-                  //                           .followUpList[index].priority!),
-                  //                       // overflow: TextOverflow.ellipsis,
-                  //                     ),
-                  //                     DataCell(SvgPicture.asset(
-                  //                             'assets/icons/edit.svg')
-                  //                         // overflow: TextOverflow.ellipsis,
-                  //                         ),
-                  //                   ],
-                  //                 ),
-                  //               ],
-                  //             );
-                  //           },
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 40),
-                  //   child: ListView.builder(
-                  //     itemCount: 4,
-                  //     itemBuilder: (context, index) =>
-                  //         // container(viewModel.colors[index]),
-                  //         container1(
-                  //             viewModel.colors[index], viewModel.clockPics[index]),
-                  //   ),
-                  // ),
                 ],
               ),
-        // body: Padding(
-        //   padding: const EdgeInsets.fromLTRB(24, 40, 24, 0),
-        //   child: SafeArea(
-        //     child: ListView.builder(
-        //       itemCount: 4,
-        //       itemBuilder: (context, index) =>
-        //           // container(viewModel.colors[index]),
-        //           container1(viewModel.colors[index], viewModel.clockPics[index]),
-        //     ),
-        // child: EncoreTabBar(
-        //   length: 2,
-        //   tabs: const ['Current Tasks', 'Completed Tasks'],
-        //   children: [
-        //     // Padding(
-        //     //   padding: const EdgeInsets.only(top: 40),
-        //     //   child: ListView.builder(
-        //     //     itemCount: 4,
-        //     //     itemBuilder: (context, index) =>
-        //     //         container(viewModel.colors[index]),
-        //     //   ),
-        //     // ),
-        //     // Padding(
-        //     //   padding: const EdgeInsets.only(top: 40),
-        //     //   child: ListView.builder(
-        //     //     itemCount: 4,
-        //     //     itemBuilder: (context, index) =>
-        //     //         // container(viewModel.colors[index]),
-        //     //         container1(
-        //     //             viewModel.colors[index], viewModel.clockPics[index]),
-        //     //   ),
-        //     // ),
-        //   ],
-        // ),
-        // ),
-        // ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: EncoreStyles.primaryColor,
           //Floating action button on Scaffold
@@ -372,11 +309,11 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 22),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
             // SizedBox(width: 24),
             Expanded(
-              flex: 2,
+              flex: 1,
               child: Text('Ticket No.',
                   style: TextStyle(
                       color: Color(0xff1ECB96),
@@ -386,7 +323,7 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
             // Spacer(flex: 1),
             // SizedBox(width: 18),
             Expanded(
-              flex: 2,
+              flex: 1,
               child: Text('DateTime',
                   style: TextStyle(
                       color: Color(0xff1ECB96),
@@ -513,20 +450,19 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(22, 0, 12, 0),
+              padding: const EdgeInsets.symmetric(horizontal: 22),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: const Text('725615'),
-                    flex: 2,
+                    flex: 1,
                   ),
                   // Spacer(
                   //   flex: 1,
                   // ),
                   // const Text('[10-02-23 | 15:23]'),
                   Expanded(
-                    flex: 3,
+                    flex: 1,
                     child: Text(
                       vm.eventDateTime,
                       style: const TextStyle(fontSize: 12),
@@ -560,7 +496,7 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
                 vm.notifyListeners();
               },
               child: Padding(
-                padding: const EdgeInsets.only(left: 24),
+                padding: const EdgeInsets.only(left: 22),
                 child: Row(
                   children: [
                     const Text(

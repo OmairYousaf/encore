@@ -11,6 +11,7 @@ class LoginViewModel extends BaseViewModel {
 
   String email = '';
   String password = '';
+  bool obsecureText = true;
 
   onEmailSaved(String? value) {
     email = value!.trim();
@@ -34,6 +35,11 @@ class LoginViewModel extends BaseViewModel {
     return null;
   }
 
+  onObsecure() {
+    obsecureText = !obsecureText;
+    notifyListeners();
+  }
+
   login(BuildContext context) async {
     formKey.currentState!.save();
     if (formKey.currentState!.validate()) {
@@ -45,6 +51,7 @@ class LoginViewModel extends BaseViewModel {
       print(resp);
 
       if (resp['status'] == 'Ok') {
+        ApiClient.prefs!.setString('token', ApiClient.authToken);
         EncoreStyles.userId = resp['data']['data']['id'];
         EncoreDialogs.showSuccessAlert(
           context,
@@ -52,7 +59,7 @@ class LoginViewModel extends BaseViewModel {
           message: 'Login Successfully',
           onConfirm: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const TasksScreen()));
+                MaterialPageRoute(builder: (context) => TasksScreen()));
           },
         );
       } else {

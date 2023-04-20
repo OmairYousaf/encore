@@ -131,6 +131,8 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
                           request: {}, endPoint: '/logout');
 
                       if (resp['status'] == 'Ok') {
+                        await ApiClient.prefs!.clear();
+                        ApiClient.authToken = '';
                         EncoreDialogs.showSuccessAlert(
                           context,
                           title: 'Success',
@@ -166,9 +168,15 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
         shape: const CircularNotchedRectangle(), //shape of notch
         notchMargin:
             7, //notche margin between floating button and bottom appbar
-        child: SvgPicture.asset(
-          'assets/icons/home.svg',
-          fit: BoxFit.scaleDown,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+          child: SvgPicture.asset(
+            'assets/icons/home.svg',
+            fit: BoxFit.scaleDown,
+          ),
         ),
       ),
     );

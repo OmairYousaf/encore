@@ -11,6 +11,9 @@ class UpdatePasswordViewModel extends BaseViewModel {
   String oldPass = '';
   String newPass = '';
   String confPass = '';
+  bool oldObsecureText = true;
+  bool newObsecureText = true;
+  bool confNewObsecureText = true;
 
   onOldPassSaved(String? value) {
     oldPass = value!.trim();
@@ -45,6 +48,21 @@ class UpdatePasswordViewModel extends BaseViewModel {
       return 'Pass & Conf. Pass not matched';
     }
     return null;
+  }
+
+  onOldObsecure() {
+    oldObsecureText = !oldObsecureText;
+    notifyListeners();
+  }
+
+  onNewObsecure() {
+    newObsecureText = !newObsecureText;
+    notifyListeners();
+  }
+
+  onConfNewObsecure() {
+    confNewObsecureText = !confNewObsecureText;
+    notifyListeners();
   }
 
   updatePass(BuildContext context) async {

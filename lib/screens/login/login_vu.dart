@@ -57,12 +57,21 @@ class LoginScreen extends ViewModelBuilderWidget<LoginViewModel> {
                         hintText: 'Email'),
                     const SizedBox(height: 20),
                     EncoreTextField(
+                        obscureText: viewModel.obsecureText,
                         prefixIcon: Padding(
                           padding: const EdgeInsets.only(left: 6),
                           child: Image.asset(
                             'assets/icons/Icon-password.png',
                             scale: 3.5,
                           ),
+                        ),
+                        suffixIcon: GestureDetector(
+                          onTap: viewModel.onObsecure,
+                          child: SvgPicture.asset(
+                              viewModel.obsecureText
+                                  ? 'assets/icons/show_password_icon.svg'
+                                  : 'assets/icons/hide_password_icon.svg',
+                              fit: BoxFit.scaleDown),
                         ),
                         onSaved: viewModel.onPasswordSaved,
                         validator: viewModel.passwordValidator,

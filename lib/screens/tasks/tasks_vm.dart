@@ -9,22 +9,15 @@ import '../../widgets/dialogs/encore_dialogs.dart';
 import '../create_event/model/model.dart';
 
 class TasksViewModel extends BaseViewModel {
+  TasksViewModel() {
+    for (int i = 0; i < eventsList.length; i++) {
+      print(eventsList[i].toJson());
+    }
+  }
   List<Event> eventsList = [];
   List<Event> followUpList = [];
   String eventDateTime = '';
   String followUpDateTime = '';
-  List<Color> colors = [
-    EncoreStyles.primaryColor,
-    const Color(0xff795DD8),
-    const Color(0xffD85FB7),
-    const Color(0xffF8A17B)
-  ];
-  List<String> clockPics = [
-    'assets/icons/clock_icon_1.svg',
-    'assets/icons/clock_icon_2.svg',
-    'assets/icons/clock_icon_3.svg',
-    'assets/icons/clock_icon_4.svg'
-  ];
 
   String getName(String cntct) {
     String name;

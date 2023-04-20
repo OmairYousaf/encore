@@ -49,14 +49,47 @@ class UpdatePasswordScreen
                   ),
                 ),
                 const SizedBox(height: 40),
-                textField('Old Password', viewModel.onOldPassSaved,
-                    viewModel.oldPassValidator),
+                textField(
+                    'Old Password',
+                    viewModel.onOldPassSaved,
+                    viewModel.oldPassValidator,
+                    GestureDetector(
+                      onTap: viewModel.onOldObsecure,
+                      child: SvgPicture.asset(
+                          viewModel.oldObsecureText
+                              ? 'assets/icons/show_password_icon.svg'
+                              : 'assets/icons/hide_password_icon.svg',
+                          fit: BoxFit.scaleDown),
+                    ),
+                    viewModel.oldObsecureText),
                 const SizedBox(height: 8),
-                textField('New Password', viewModel.onNewPassSaved,
-                    viewModel.newPassValidator),
+                textField(
+                    'New Password',
+                    viewModel.onNewPassSaved,
+                    viewModel.newPassValidator,
+                    GestureDetector(
+                      onTap: viewModel.onNewObsecure,
+                      child: SvgPicture.asset(
+                          viewModel.newObsecureText
+                              ? 'assets/icons/show_password_icon.svg'
+                              : 'assets/icons/hide_password_icon.svg',
+                          fit: BoxFit.scaleDown),
+                    ),
+                    viewModel.newObsecureText),
                 const SizedBox(height: 8),
-                textField('Confirm Password', viewModel.onConfNewPassSaved,
-                    viewModel.confNewPassValidator),
+                textField(
+                    'Confirm Password',
+                    viewModel.onConfNewPassSaved,
+                    viewModel.confNewPassValidator,
+                    GestureDetector(
+                      onTap: viewModel.onConfNewObsecure,
+                      child: SvgPicture.asset(
+                          viewModel.confNewObsecureText
+                              ? 'assets/icons/show_password_icon.svg'
+                              : 'assets/icons/hide_password_icon.svg',
+                          fit: BoxFit.scaleDown),
+                    ),
+                    viewModel.confNewObsecureText),
                 // const Spacer(),
                 const SizedBox(height: 100),
                 EncoreButton(
@@ -76,8 +109,12 @@ class UpdatePasswordScreen
     );
   }
 
-  Widget textField(String hintText, dynamic Function(String?)? onSaved,
-      String? Function(String?)? validator) {
+  Widget textField(
+      String hintText,
+      dynamic Function(String?)? onSaved,
+      String? Function(String?)? validator,
+      Widget suffixIcon,
+      bool obsecureText) {
     return Stack(
       children: [
         Container(
@@ -92,6 +129,7 @@ class UpdatePasswordScreen
           ),
         ),
         TextFormField(
+          obscureText: obsecureText,
           decoration: InputDecoration(
             prefixIcon: SvgPicture.asset(
               'assets/icons/lock.svg',
@@ -104,10 +142,11 @@ class UpdatePasswordScreen
             // contentPadding:
             //     const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
             hintText: hintText,
-            suffixIcon: SvgPicture.asset(
-              'assets/icons/eye_icon.svg',
-              fit: BoxFit.scaleDown,
-            ),
+            // suffixIcon: SvgPicture.asset(
+            //   'assets/icons/eye_icon.svg',
+            //   fit: BoxFit.scaleDown,
+            // ),
+            suffixIcon: suffixIcon,
             hintStyle: GoogleFonts.poppins(
                 fontSize: 24,
                 fontWeight: FontWeight.w400,
