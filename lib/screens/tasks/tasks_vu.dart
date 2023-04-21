@@ -312,7 +312,7 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
           children: const [
             Expanded(
               flex: 1,
-              child: Text('Ticket No.',
+              child: Text('TicketNo',
                   style: TextStyle(
                     color: Color(0xff1ECB96),
                     // fontSize: 14,
@@ -320,14 +320,24 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
                   )),
             ),
             // Spacer(flex: 1),
-            // SizedBox(width: 18),
+            // SizedBox(width: 4),
             Expanded(
               flex: 1,
-              child: Text('DateTime',
+              child: Text('Date',
                   style: TextStyle(
-                      color: Color(0xff1ECB96),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold)),
+                    color: Color(0xff1ECB96),
+                    // fontSize: 14,
+                    // fontWeight: FontWeight.bold
+                  )),
+            ),
+            Expanded(
+              flex: 1,
+              child: Text('Time',
+                  style: TextStyle(
+                    color: Color(0xff1ECB96),
+                    // fontSize: 14,
+                    // fontWeight: FontWeight.bold
+                  )),
             ),
             // Spacer(flex: 1),
             // SizedBox(width: 18),
@@ -344,9 +354,10 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
               flex: 1,
               child: Text('Agent',
                   style: TextStyle(
-                      color: Color(0xff1ECB96),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold)),
+                    color: Color(0xff1ECB96),
+                    // fontSize: 14,
+                    // fontWeight: FontWeight.bold
+                  )),
             ),
             // Spacer(flex: 1),
             // SizedBox(width: 18),
@@ -354,9 +365,10 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
               flex: 1,
               child: Text('Action',
                   style: TextStyle(
-                      color: Color(0xff1ECB96),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold)),
+                    color: Color(0xff1ECB96),
+                    // fontSize: 14,
+                    // fontWeight: FontWeight.bold
+                  )),
             )
           ],
         ),
@@ -369,26 +381,28 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
       height: 48,
       decoration: const BoxDecoration(color: Color(0xffF2F2F2)),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
             Expanded(
-              flex: 2,
-              child: Text('Ticket No.',
+              flex: 1,
+              child: Text('TicketNo',
                   style: TextStyle(
-                      color: Color(0xff1ECB96),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold)),
+                    color: Color(0xff1ECB96),
+                    // fontSize: 14,
+                    // fontWeight: FontWeight.bold
+                  )),
             ),
             // SizedBox(width: 18),
             Expanded(
               flex: 2,
               child: Text('DateTime',
                   style: TextStyle(
-                      color: Color(0xff1ECB96),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold)),
+                    color: Color(0xff1ECB96),
+                    // fontSize: 14,
+                    // fontWeight: FontWeight.bold
+                  )),
             ),
             // SizedBox(width: 22),
             // Text('Time',
@@ -401,18 +415,20 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
               flex: 1,
               child: Text('Agent',
                   style: TextStyle(
-                      color: Color(0xff1ECB96),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold)),
+                    color: Color(0xff1ECB96),
+                    // fontSize: 14,
+                    // fontWeight: FontWeight.bold
+                  )),
             ),
             // SizedBox(width: 16),
             Expanded(
               flex: 1,
               child: Text('Action',
                   style: TextStyle(
-                      color: Color(0xff1ECB96),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold)),
+                    color: Color(0xff1ECB96),
+                    // fontSize: 14,
+                    // fontWeight: FontWeight.bold
+                  )),
             ),
             // SizedBox(width: 16),
             Expanded(
@@ -420,9 +436,10 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
               child: Text('Priority',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                      color: Color(0xff1ECB96),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold)),
+                    color: Color(0xff1ECB96),
+                    // fontSize: 14,
+                    // fontWeight: FontWeight.bold
+                  )),
             )
           ],
         ),
@@ -434,6 +451,8 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
     vm.eventsList[index].name = vm.getName(vm.eventsList[index].name!);
     vm.eventDateTime = vm.removeLastTwoZerosAndPreviousColumn(
         vm.eventsList[index].followupDateTime!);
+    vm.eventDate = vm.getDate(vm.eventDateTime);
+    vm.eventTime = vm.getTime(vm.eventDateTime);
     return GestureDetector(
       onTap: () {
         print('event');
@@ -442,82 +461,87 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
             MaterialPageRoute(
                 builder: (context) => CreateEventScreen(vm.eventsList[index])));
       },
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 22),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: const Text('725615'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 22),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Text(vm.eventsList[index].id.toString()),
+                ),
+
+                // const Text('[10-02-23 | 15:23]'),
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    vm.eventDate,
                   ),
-                  // Spacer(
-                  //   flex: 1,
-                  // ),
-                  // const Text('[10-02-23 | 15:23]'),
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      vm.eventDateTime,
-                      style: const TextStyle(fontSize: 12),
-                    ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    vm.eventTime,
                   ),
-                  // Spacer(
-                  //   flex: 1,
-                  // ),
-                  Expanded(flex: 1, child: Text(vm.eventsList[index].name!)),
-                  // Spacer(
-                  //   flex: 1,
-                  // ),
-                  Expanded(
-                      flex: 1,
+                ),
+
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(vm.eventsList[index].name!),
+                  ),
+                ),
+
+                Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
                         vm.eventsList[index].eventOccur!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                      )),
-                  // SizedBox(width: 12),
+                      ),
+                    )),
+                // SizedBox(width: 12),
 
-                  SvgPicture.asset('assets/icons/edit.svg')
+                SvgPicture.asset('assets/icons/edit.svg')
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          GestureDetector(
+            onTap: () {
+              vm.eventsList[index].isExpanded =
+                  !vm.eventsList[index].isExpanded!;
+              vm.notifyListeners();
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 22),
+              child: Row(
+                children: [
+                  const Text(
+                    'NOTES',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(width: 8),
+                  SvgPicture.asset(!vm.eventsList[index].isExpanded!
+                      ? 'assets/icons/up.svg'
+                      : 'assets/icons/down.svg')
                 ],
               ),
             ),
-            const SizedBox(height: 8),
-            GestureDetector(
-              onTap: () {
-                vm.eventsList[index].isExpanded =
-                    !vm.eventsList[index].isExpanded!;
-                vm.notifyListeners();
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 22),
-                child: Row(
-                  children: [
-                    const Text(
-                      'NOTES',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(width: 8),
-                    SvgPicture.asset(!vm.eventsList[index].isExpanded!
-                        ? 'assets/icons/up.svg'
-                        : 'assets/icons/down.svg')
-                  ],
-                ),
-              ),
-            ),
-            vm.eventsList[index].isExpanded!
-                ? Padding(
-                    padding: const EdgeInsets.only(left: 24),
-                    child: Text(vm.eventsList[index].note!),
-                  )
-                : const SizedBox.shrink(),
-            const Divider(thickness: 2)
-          ],
-        ),
+          ),
+          vm.eventsList[index].isExpanded!
+              ? Padding(
+                  padding: const EdgeInsets.only(left: 24),
+                  child: Text(vm.eventsList[index].note!),
+                )
+              : const SizedBox.shrink(),
+          const Divider(thickness: 2)
+        ],
       ),
     );
   }

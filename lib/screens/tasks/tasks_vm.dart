@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:encore/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../network/api_client.dart';
@@ -17,6 +18,8 @@ class TasksViewModel extends BaseViewModel {
   List<Event> eventsList = [];
   List<Event> followUpList = [];
   String eventDateTime = '';
+  String eventDate = '';
+  String eventTime = '';
   String followUpDateTime = '';
 
   String getName(String cntct) {
@@ -55,6 +58,16 @@ class TasksViewModel extends BaseViewModel {
     false,
     false
   ];
+
+  String getDate(String dateTimeString) {
+    DateTime dateTime = DateTime.parse(dateTimeString);
+    return DateFormat('dd-MM-yy').format(dateTime);
+  }
+
+  String getTime(String dateTimeString) {
+    DateTime dateTime = DateTime.parse(dateTimeString);
+    return DateFormat('HH:mm').format(dateTime);
+  }
 
   Future<void> getEvents(BuildContext context) async {
     setBusy(true);
