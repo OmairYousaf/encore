@@ -16,6 +16,7 @@ class UpdatePasswordScreen
   Widget builder(
       BuildContext context, UpdatePasswordViewModel viewModel, Widget? child) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: null,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(

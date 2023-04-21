@@ -590,6 +590,7 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
                       flex: 1,
                       child: Text(
                         vm.followUpTime,
+                        style: TextStyle(fontSize: 12),
                       )),
                   Expanded(
                     flex: 1,

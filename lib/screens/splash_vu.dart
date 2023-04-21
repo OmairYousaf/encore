@@ -34,7 +34,15 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: SvgPicture.asset('assets/icons/splash.svg')),
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Align(
+            alignment: Alignment.center,
+            child: Image.asset(
+              'assets/icons/encore-logo.png',
+              scale: 3.5,
+            )),
+      ),
     );
   }
 }
