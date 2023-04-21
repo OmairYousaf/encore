@@ -21,6 +21,8 @@ class TasksViewModel extends BaseViewModel {
   String eventDate = '';
   String eventTime = '';
   String followUpDateTime = '';
+  String followUpDate = '';
+  String followUpTime = '';
 
   String getName(String cntct) {
     String name;

@@ -383,7 +383,6 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
             Expanded(
               flex: 1,
@@ -396,8 +395,17 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
             ),
             // SizedBox(width: 18),
             Expanded(
-              flex: 2,
-              child: Text('DateTime',
+              flex: 1,
+              child: Text('Date',
+                  style: TextStyle(
+                    color: Color(0xff1ECB96),
+                    // fontSize: 14,
+                    // fontWeight: FontWeight.bold
+                  )),
+            ),
+            Expanded(
+              flex: 1,
+              child: Text('Time',
                   style: TextStyle(
                     color: Color(0xff1ECB96),
                     // fontSize: 14,
@@ -550,6 +558,8 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
     vm.followUpList[index].name = vm.getName(vm.followUpList[index].name!);
     vm.followUpDateTime = vm.removeLastTwoZerosAndPreviousColumn(
         vm.followUpList[index].followupDateTime!);
+    vm.followUpDate = vm.getDate(vm.followUpDateTime);
+    vm.followUpTime = vm.getTime(vm.followUpDateTime);
     return GestureDetector(
       onTap: () {
         print('follow up');
@@ -564,30 +574,52 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
           decoration: const BoxDecoration(),
           child: Column(children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(12, 0, 8, 0),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(flex: 2, child: const Text('725615')),
-                  // const SizedBox(width: 22),
-                  Expanded(flex: 4, child: Text(vm.followUpDateTime)),
-                  // const SizedBox(width: 12),
-                  Expanded(flex: 1, child: Text(vm.followUpList[index].name!)),
-                  // const SizedBox(width: 32),
+                  Expanded(
+                      flex: 1,
+                      child: Text(vm.followUpList[index].id.toString())),
+                  Expanded(
+                      flex: 1,
+                      child: Text(
+                        vm.followUpDate,
+                        style: TextStyle(fontSize: 12),
+                      )),
+                  Expanded(
+                      flex: 1,
+                      child: Text(
+                        vm.followUpTime,
+                      )),
                   Expanded(
                     flex: 1,
-                    child: Text(
-                      vm.followUpList[index].followupOccur!,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        vm.followUpList[index].name!,
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 22),
-                  Text(
-                    vm.followUpList[index].priority!,
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        vm.followUpList[index].followupOccur!,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
                   ),
-                  // const SizedBox(width: 18),
-                  // Spacer(),
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        vm.followUpList[index].priority!,
+                      ),
+                    ),
+                  ),
                   SvgPicture.asset('assets/icons/edit.svg')
                 ],
               ),
