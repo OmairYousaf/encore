@@ -112,4 +112,29 @@ class EncoreDialogs {
       ),
     );
   }
+
+  static showProgress(BuildContext context,
+      {String title = 'Loading please wait'}) {
+    AlertDialog(
+      content: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
+        child: Row(
+          children: [
+            const CircularProgressIndicator(),
+            const SizedBox(width: 20),
+            Text(
+              title,
+              maxLines: 1,
+              style: const TextStyle(
+                  fontSize: 13, overflow: TextOverflow.ellipsis),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+hideProgress(context) {
+  Navigator.pop(context);
 }

@@ -84,6 +84,15 @@ class CreateAccountScreen
                         hintText: 'Phone Number'),
                     const SizedBox(height: 12),
                     EncoreTextField(
+                        obscureText: viewModel.obsecureText,
+                        suffixIcon: GestureDetector(
+                          onTap: viewModel.onObsecure,
+                          child: SvgPicture.asset(
+                              viewModel.obsecureText
+                                  ? 'assets/icons/show_password_icon.svg'
+                                  : 'assets/icons/hide_password_icon.svg',
+                              fit: BoxFit.scaleDown),
+                        ),
                         prefixIcon: Image.asset(
                           'assets/icons/Icon-password.png',
                           scale: 3.5,

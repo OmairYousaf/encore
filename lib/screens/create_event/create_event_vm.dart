@@ -52,12 +52,37 @@ class CreateEventViewModel extends BaseViewModel {
     // Get all contacts from the device
     bool checkPermission = await getContactsPermission();
     if (checkPermission) {
-      Iterable<Contact> contacts = await ContactsService.getContacts();
+      setBusy(true);
+
+      try {
+        contact = await ContactsService.openDeviceContactPicker();
+        print(contact);
+        // Perform a form operation here
+      }
+      //  on FormOperationException catch (e) {
+      //   if (e.errorCode == FormOperationErrorCode.FORM_OPERATION_CANCELED) {
+      //     // Handle form operation cancellation here
+      //     print('Form operation cancelled by the user');
+      //   } else {
+      //     // Handle other form operation errors here
+      //     print('Form operation failed with error code: ${e.errorCode}');
+      //   }
+      // }
+      catch (e) {
+        // Handle other exceptions here
+        print('An error occurred: $e');
+      }
+      // Iterable<Contact> contacts = await ContactsService.getContacts();
 
       // Display the contact picker
-      contact = await ContactsService.openDeviceContactPicker();
     }
-    return contact!;
+    if (contact != null) {
+      setBusy(false);
+      return contact!;
+    } else {
+      return EncoreDialogs.showErrorAlert(context,
+          title: 'Error', message: 'selected contact is null');
+    }
   }
 
   setDate(int timeStamp) {

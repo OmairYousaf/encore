@@ -160,14 +160,30 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                _card(model == null ? viewModel.contactNo : model!.phone!,
-                    'contacts', onTap: () async {
-                  // viewModel.selectContact(context);
-                  viewModel.contact = await viewModel.pickContact();
-                  // model!.phone = viewModel.contact!.phones!.first.value!;
-                  viewModel.contactNo = viewModel.contact!.phones!.first.value!;
-                  viewModel.notifyListeners();
-                }),
+                viewModel.isBusy
+                    ? Center(
+                        child: EncoreCard(
+                            child: Row(
+                        children: [
+                          Text('Loading contacts...'),
+                          Spacer(),
+                          CircularProgressIndicator(),
+                        ],
+                      )))
+                    : _card(model == null ? viewModel.contactNo : model!.phone!,
+                        'contacts', onTap: () async {
+                        // viewModel.selectContact(context);
+                        // viewModel.setBusy(true);
+                        // EncoreDialogs.showProgress(context,
+                        //     title: 'loading, please wait...');
+                        viewModel.contact = await viewModel.pickContact();
+                        // hideProgress(context);
+                        // viewModel.setBusy(false);
+                        // model!.phone = viewModel.contact!.phones!.first.value!;
+                        viewModel.contactNo =
+                            viewModel.contact!.phones!.first.value!;
+                        viewModel.notifyListeners();
+                      }),
                 const SizedBox(height: 24),
                 Text(
                   'Set Your Follow Up Date and Time',

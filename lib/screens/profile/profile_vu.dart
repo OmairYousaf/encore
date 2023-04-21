@@ -55,20 +55,20 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
                     ),
                   ),
                 ),
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: Container(
-                    height: 25,
-                    width: 25,
-                    decoration: BoxDecoration(
-                        color: EncoreStyles.whiteColor, shape: BoxShape.circle),
-                    child: SvgPicture.asset(
-                      'assets/icons/edit.svg',
-                      fit: BoxFit.scaleDown,
-                    ),
-                  ),
-                )
+                // Positioned(
+                //   right: 0,
+                //   top: 0,
+                //   child: Container(
+                //     height: 25,
+                //     width: 25,
+                //     decoration: BoxDecoration(
+                //         color: EncoreStyles.whiteColor, shape: BoxShape.circle),
+                //     child: SvgPicture.asset(
+                //       'assets/icons/edit.svg',
+                //       fit: BoxFit.scaleDown,
+                //     ),
+                //   ),
+                // )
               ],
             ),
             const SizedBox(height: 24),

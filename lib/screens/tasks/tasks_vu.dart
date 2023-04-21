@@ -309,16 +309,15 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 22),
         child: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
-            // SizedBox(width: 24),
             Expanded(
               flex: 1,
               child: Text('Ticket No.',
                   style: TextStyle(
-                      color: Color(0xff1ECB96),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold)),
+                    color: Color(0xff1ECB96),
+                    // fontSize: 14,
+                    // fontWeight: FontWeight.bold
+                  )),
             ),
             // Spacer(flex: 1),
             // SizedBox(width: 18),
@@ -444,8 +443,6 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
                 builder: (context) => CreateEventScreen(vm.eventsList[index])));
       },
       child: Container(
-        // height: 48,
-        decoration: const BoxDecoration(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -454,8 +451,8 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
               child: Row(
                 children: [
                   Expanded(
-                    child: const Text('725615'),
                     flex: 1,
+                    child: const Text('725615'),
                   ),
                   // Spacer(
                   //   flex: 1,

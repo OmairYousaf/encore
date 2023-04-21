@@ -14,6 +14,7 @@ class CreateAccountViewModel extends BaseViewModel {
   String email = '';
   String phoneNo = '';
   String password = '';
+  bool obsecureText = true;
 
   onFullNameSaved(String? value) {
     fullName = value!.trim();
@@ -57,6 +58,11 @@ class CreateAccountViewModel extends BaseViewModel {
       return 'Password is required';
     }
     return null;
+  }
+
+  onObsecure() {
+    obsecureText = !obsecureText;
+    notifyListeners();
   }
 
   signUp(BuildContext context) async {
