@@ -14,7 +14,8 @@ import '../update_password/update_password_vu.dart';
 import 'profile_vm.dart';
 
 class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
-  const ProfileScreen({super.key});
+  ProfileScreen(this.isFromMain, {super.key});
+  bool isFromMain;
 
   @override
   Widget builder(
@@ -170,8 +171,12 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
             7, //notche margin between floating button and bottom appbar
         child: GestureDetector(
           onTap: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
+            if (isFromMain) {
+              Navigator.pop(context);
+            } else {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            }
           },
           child: SvgPicture.asset(
             'assets/icons/home.svg',

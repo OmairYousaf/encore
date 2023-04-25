@@ -27,10 +27,10 @@ class EventDetailScreen extends ViewModelBuilderWidget<EventDetailViewModel> {
             const SizedBox(width: 12),
             ActionButton(
               icon: 'assets/icons/profile.svg',
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ProfileScreen())),
+              // onTap: () => Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) =>  ProfileScreen())),
             )
           ],
         ),

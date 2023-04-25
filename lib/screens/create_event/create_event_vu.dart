@@ -55,7 +55,7 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ProfileScreen()));
+                        builder: (context) => ProfileScreen(false)));
               },
             )
           ],
@@ -469,9 +469,12 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
             //   await viewModel.createEvent();
             // }
           },
-          child: SvgPicture.asset(
-            'assets/icons/home.svg',
-            fit: BoxFit.scaleDown,
+          child: GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: SvgPicture.asset(
+              'assets/icons/home.svg',
+              fit: BoxFit.scaleDown,
+            ),
           ),
         ),
       ),

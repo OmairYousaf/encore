@@ -80,8 +80,12 @@ class CreateEventViewModel extends BaseViewModel {
       setBusy(false);
       return contact!;
     } else {
-      return EncoreDialogs.showErrorAlert(context,
-          title: 'Error', message: 'selected contact is null');
+      return EncoreDialogs.showErrorAlert(
+        context,
+        title: 'Error',
+        message: 'selected contact must be non-null',
+        onConfirm: () => setBusy(false),
+      );
     }
   }
 
