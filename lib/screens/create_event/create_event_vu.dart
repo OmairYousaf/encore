@@ -98,12 +98,12 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                     child: Row(
                       children: [
                         Expanded(
-                          child: DropdownButton<String>(
+                          child: DropdownButtonFormField<String>(
                             value: model == null
                                 ? selectedEvent
                                 : model!.eventOccur,
                             // value: viewModel.dropdownValue1,
-
+                            // isDense: true,
                             onChanged: (String? newValue) {
                               // viewModel.dropdownValue1 = newValue!;
                               viewModel.notifyListeners();
@@ -120,7 +120,18 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                             icon:
                                 SvgPicture.asset('assets/icons/down_arrow.svg'),
                             iconSize: 24,
-                            underline: const SizedBox.shrink(),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: '',
+                            ),
+                            validator: (value) {
+                              if (value == 'How event occured?') {
+                                return 'Please select an option';
+                              }
+                              return null;
+                            },
+                            // underline: const SizedBox.shrink(),
+
                             style: const TextStyle(
                                 color: Color(0xffAFAEAE), fontSize: 16),
 
@@ -140,25 +151,71 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                 ]),
                 const SizedBox(height: 8),
                 const SizedBox(height: 8),
-                SizedBox(
-                  height: 6 * 24.0,
-                  child: EncoreTextField(
-                    initialValue: model == null ? '' : model!.note,
-                    hintText: 'Add notes',
-                    maxLine: 7,
-                    onSaved: (note) {
-                      model == null
-                          ? viewModel.note = note!
-                          : model!.note != note;
-                      print(viewModel.note);
-                    },
 
-                    // controller: viewModel.noteController,
-
-                    // style: EncoreStyles.textFieldHint
-                    //     .copyWith(color: const Color(0xffAFAEAE)),
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      maxLines: 6,
+                      decoration: InputDecoration(
+                        hintText: 'Add notes',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                      onChanged: (note) {
+                        model == null
+                            ? viewModel.note = note
+                            : model!.note != note;
+                        viewModel.notifyListeners();
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                    ),
+                    if (viewModel.formKey.currentState == null ||
+                        viewModel.formKey.currentState!.validate())
+                      SizedBox(height: 8.0)
+                    else
+                      Text(
+                        'Please enter some text',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                  ],
                 ),
+
+                // Column(
+                //   children: [
+                //     SizedBox(
+                //       height: 6 * 18.0,
+                //       child: EncoreTextField(
+                //         initialValue: model == null ? '' : model!.note,
+                //         hintText: 'Add notes',
+                //         maxLine: 7,
+                //         onSaved: (note) {
+                //           model == null
+                //               ? viewModel.note = note!
+                //               : model!.note != note;
+                //           print(viewModel.note);
+                //         },
+                //         validator: (value) {
+                //           if (value!.isEmpty) {
+                //             return 'Please enter some text';
+                //           }
+                //           return null;
+                //         },
+
+                //         // controller: viewModel.noteController,
+
+                //         // style: EncoreStyles.textFieldHint
+                //         //     .copyWith(color: const Color(0xffAFAEAE)),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 const SizedBox(height: 24),
                 viewModel.isBusy
                     ? Center(
@@ -278,7 +335,7 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                     child: Row(
                       children: [
                         Expanded(
-                          child: DropdownButton<String>(
+                          child: DropdownButtonFormField<String>(
                             value: model == null
                                 ? selectedFollowUp
                                 : model!.followupOccur,
@@ -298,7 +355,17 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                             icon:
                                 SvgPicture.asset('assets/icons/down_arrow.svg'),
                             iconSize: 24,
-                            underline: const SizedBox.shrink(),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: '',
+                            ),
+                            validator: (value) {
+                              if (value == 'How Follow-up occured?') {
+                                return 'Please select an option';
+                              }
+                              return null;
+                            },
+
                             style: const TextStyle(
                                 color: Color(0xffAFAEAE), fontSize: 16),
 
@@ -334,46 +401,53 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 14, vertical: 3),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        DropdownButton<String>(
-                          value: model == null
-                              ? selectedPriority
-                              : model!.priority,
-                          // value: viewModel.dropdownValue3,
-                          onChanged: (String? newValue) {
-                            // viewModel.dropdownValue3 = newValue!;
-                            if (model != null) {
-                              model!.priority = newValue!;
-                              viewModel.notifyListeners();
-                            } else {
-                              selectedPriority = newValue!;
-                              viewModel.dropdownValue3 = newValue;
-                              viewModel.notifyListeners();
-                            }
-                          },
-                          // icon: const Icon(Icons.arrow_drop_down),
-                          icon: Padding(
-                            padding: const EdgeInsets.only(left: 45),
-                            child:
-                                SvgPicture.asset('assets/icons/down_arrow.svg'),
-                          ),
-                          iconSize: 24,
-                          underline: const SizedBox.shrink(),
-                          style: const TextStyle(
-                              color: Color(0xffAFAEAE), fontSize: 16),
-
-                          // isExpanded: true,
-                          items: priority
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 3.4,
+                      child: DropdownButtonFormField<String>(
+                        value:
+                            model == null ? selectedPriority : model!.priority,
+                        // value: viewModel.dropdownValue3,
+                        onChanged: (String? newValue) {
+                          // viewModel.dropdownValue3 = newValue!;
+                          if (model != null) {
+                            model!.priority = newValue!;
+                            viewModel.notifyListeners();
+                          } else {
+                            selectedPriority = newValue!;
+                            viewModel.dropdownValue3 = newValue;
+                            viewModel.notifyListeners();
+                          }
+                        },
+                        // icon: const Icon(Icons.arrow_drop_down),
+                        icon: Padding(
+                          padding: const EdgeInsets.only(left: 45),
+                          child:
+                              SvgPicture.asset('assets/icons/down_arrow.svg'),
                         ),
-                      ],
+                        iconSize: 24,
+                        isExpanded: true,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: '',
+                        ),
+                        validator: (value) {
+                          if (value == 'Priority') {
+                            return 'Select priority';
+                          }
+                          return null;
+                        },
+                        style: const TextStyle(
+                            color: Color(0xffAFAEAE), fontSize: 16),
+
+                        // isExpanded: true,
+                        items: priority
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
                 ]),
