@@ -9,17 +9,28 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:intl/intl.dart';
 
 import '../../network/api_client.dart';
+import '../../utils/preferences.dart';
 import '../../widgets/dialogs/encore_dialogs.dart';
 
 class CreateEventViewModel extends BaseViewModel {
   Event? model;
+  String profileUrl = '';
   BuildContext context;
   final formKey = GlobalKey<FormState>();
   CreateEventViewModel(this.context, this.model) {
+    getPrifileUrl();
     print(model);
     if (model != null) {
       removeTimeFromDate(model!.followupDateTime!);
     }
+  }
+
+  getPrifileUrl() async {
+    var user = await Preferences.getSavedUser();
+    profileUrl =
+        '${ApiClient.wBaseUrl.substring(0, ApiClient.wBaseUrl.length - 3)}${user!.data!.profileImage}';
+    print(profileUrl);
+    notifyListeners();
   }
 
   removeTimeFromDate(String dateTimeString) {

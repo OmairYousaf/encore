@@ -1,4 +1,5 @@
 import 'package:encore/network/api_client.dart';
+import 'package:encore/utils/preferences.dart';
 import 'package:encore/widgets/dialogs/encore_dialogs.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
   Widget builder(
       BuildContext context, ProfileViewModel viewModel, Widget? child) {
     return Scaffold(
-      appBar: const PreferredSize(
+      appBar: PreferredSize(
         preferredSize: Size.fromHeight(95),
         child: EncoreAppBar(
           addBackButton: false,
@@ -29,7 +30,15 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
           actions: [
             // ActionButton(icon: 'assets/icons/bell_icon.svg'),
             SizedBox(width: 12),
-            ActionButton(icon: 'assets/icons/profile.svg')
+            ActionButton(
+              icon: 'assets/icons/profile.svg',
+              profileImage: viewModel.profileUrl != ''
+                  ? Image.network(
+                      viewModel.profileUrl,
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+            )
           ],
         ),
       ),
@@ -45,36 +54,23 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
                   color: EncoreStyles.primaryColor),
             ),
             const SizedBox(height: 12),
-            Stack(
-              children: [
-                ClipOval(
-                  child: SizedBox.fromSize(
-                    size: const Size.fromRadius(35),
-                    child: SvgPicture.asset(
-                      'assets/icons/profile_icon.svg',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                // Positioned(
-                //   right: 0,
-                //   top: 0,
-                //   child: Container(
-                //     height: 25,
-                //     width: 25,
-                //     decoration: BoxDecoration(
-                //         color: EncoreStyles.whiteColor, shape: BoxShape.circle),
-                //     child: SvgPicture.asset(
-                //       'assets/icons/edit.svg',
-                //       fit: BoxFit.scaleDown,
-                //     ),
-                //   ),
-                // )
-              ],
+            ClipOval(
+              child: SizedBox.fromSize(
+                size: const Size.fromRadius(35),
+                child: viewModel.profileUrl == ''
+                    ? SvgPicture.asset(
+                        'assets/icons/profile_icon.svg',
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        viewModel.profileUrl,
+                        fit: BoxFit.cover,
+                      ),
+              ),
             ),
             const SizedBox(height: 24),
             Text(
-              'Smith Wilimson',
+              viewModel.userName ?? 'Smith Wilimson',
               style: GoogleFonts.poppins(
                 color: EncoreStyles.primaryColor,
                 fontSize: 24,

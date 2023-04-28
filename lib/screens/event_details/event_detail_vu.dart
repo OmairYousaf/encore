@@ -23,7 +23,7 @@ class EventDetailScreen extends ViewModelBuilderWidget<EventDetailViewModel> {
           // addBackButton: false,
           title: 'encor',
           actions: [
-            const ActionButton(icon: 'assets/icons/bell_icon.svg'),
+            ActionButton(icon: 'assets/icons/bell_icon.svg'),
             const SizedBox(width: 12),
             ActionButton(
               icon: 'assets/icons/profile.svg',

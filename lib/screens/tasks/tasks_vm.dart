@@ -6,15 +6,27 @@ import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../network/api_client.dart';
+import '../../utils/preferences.dart';
 import '../../widgets/dialogs/encore_dialogs.dart';
 import '../create_event/model/model.dart';
 
 class TasksViewModel extends BaseViewModel {
   TasksViewModel() {
+    getPrifileUrl();
     for (int i = 0; i < eventsList.length; i++) {
       print(eventsList[i].toJson());
     }
   }
+  getPrifileUrl() async {
+    var user = await Preferences.getSavedUser();
+    profileUrl =
+        '${ApiClient.wBaseUrl.substring(0, ApiClient.wBaseUrl.length - 3)}${user!.data!.profileImage}';
+    print(profileUrl);
+    notifyListeners();
+  }
+
+  String profileUrl = '';
+
   List<Event> eventsList = [];
   List<Event> followUpList = [];
   String eventDateTime = '';

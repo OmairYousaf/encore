@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:encore/constants/constants.dart';
 import 'package:encore/screens/login/login_vu.dart';
 import 'package:flutter/gestures.dart';
@@ -44,11 +46,19 @@ class CreateAccountScreen
                         decoration: BoxDecoration(
                             boxShadow: EncoreStyles.cardShadow,
                             color: EncoreStyles.whiteColor,
+                            image: viewModel.filePath != null
+                                ? DecorationImage(
+                                    image: FileImage(
+                                        File(viewModel.filePath!.path!)),
+                                    fit: BoxFit.cover)
+                                : null,
                             borderRadius: BorderRadius.circular(100)),
-                        child: SvgPicture.asset(
-                          'assets/icons/take_image.svg',
-                          fit: BoxFit.scaleDown,
-                        ),
+                        child: viewModel.filePath == null
+                            ? SvgPicture.asset(
+                                'assets/icons/take_image.svg',
+                                fit: BoxFit.scaleDown,
+                              )
+                            : SizedBox.shrink(),
                       ),
                     ),
                     const SizedBox(height: 32),

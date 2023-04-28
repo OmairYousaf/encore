@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:encore/constants/constants.dart';
+import 'package:encore/network/api_client.dart';
+import 'package:encore/utils/preferences.dart';
 import 'package:encore/widgets/appBar/encore_appbar.dart';
 import 'package:encore/widgets/dialogs/encore_dialogs.dart';
 import 'package:flutter/material.dart';
@@ -121,6 +123,12 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
               const SizedBox(width: 12),
               ActionButton(
                 icon: 'assets/icons/profile.svg',
+                profileImage: viewModel.profileUrl != ''
+                    ? Image.network(
+                        viewModel.profileUrl,
+                        fit: BoxFit.cover,
+                      )
+                    : null,
                 onTap: () {
                   Navigator.push(
                       context,
@@ -202,6 +210,10 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
           child: GestureDetector(
             onTap: () async {
               print('object');
+
+              var user = await Preferences.getSavedUser();
+              print(
+                  '${ApiClient.wBaseUrl.substring(0, ApiClient.wBaseUrl.length - 3)}${user!.data!.profileImage}');
               await viewModel.getEvents(context);
             },
             child: SvgPicture.asset(

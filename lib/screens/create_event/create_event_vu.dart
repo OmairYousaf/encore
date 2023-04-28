@@ -51,6 +51,12 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
             const SizedBox(width: 12),
             ActionButton(
               icon: 'assets/icons/profile.svg',
+              profileImage: viewModel.profileUrl != ''
+                  ? Image.network(
+                      viewModel.profileUrl,
+                      fit: BoxFit.cover,
+                    )
+                  : null,
               onTap: () {
                 Navigator.push(
                     context,

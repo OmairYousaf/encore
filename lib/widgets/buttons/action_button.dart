@@ -93,8 +93,14 @@ class ActionButton extends StatelessWidget {
   final Color? iconColor;
   final String icon;
   final VoidCallback? onTap;
-  const ActionButton(
-      {super.key, this.color, required this.icon, this.iconColor, this.onTap});
+  Widget? profileImage;
+  ActionButton(
+      {super.key,
+      this.color,
+      required this.icon,
+      this.iconColor,
+      this.onTap,
+      this.profileImage});
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +113,12 @@ class ActionButton extends StatelessWidget {
           color: const Color(0xff1caa7f),
           borderRadius: BorderRadius.circular(25),
         ),
-        child: SvgPicture.asset(icon, fit: BoxFit.scaleDown),
+        child: ClipOval(
+          child: SizedBox.fromSize(
+              size: Size.fromRadius(20),
+              child: profileImage ??
+                  SvgPicture.asset(icon, fit: BoxFit.scaleDown)),
+        ),
       ),
     );
   }

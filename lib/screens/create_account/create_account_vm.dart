@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:file_picker/file_picker.dart';
@@ -14,6 +17,7 @@ class CreateAccountViewModel extends BaseViewModel {
   String email = '';
   String phoneNo = '';
   String password = '';
+  String fileUrl = '';
   bool obsecureText = true;
 
   onFullNameSaved(String? value) {
@@ -65,15 +69,38 @@ class CreateAccountViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  Future<void> onUploadFile(context) async {
+    if (filePath != null) {
+      debugPrint(filePath!.path);
+      final file = File(filePath!.path!);
+      FormData formData = FormData.fromMap(<String, dynamic>{
+        'location': 'profile_images',
+        'media_upload': await MultipartFile.fromFile(filePath!.path!),
+      });
+      // EncoreDialogs.showProgress(context, title: 'uploading, please wait...');
+      final resp = await ApiClient.postMultipart(
+        file: await file.length(),
+        request: formData,
+        endPoint: '/upload-media',
+      );
+      if (resp['data'] != null) {
+        fileUrl = resp['data']['data'];
+        debugPrint(fileUrl);
+        // onSendMessages(context);
+      }
+    }
+  }
+
   signUp(BuildContext context) async {
     formKey.currentState!.save();
     if (formKey.currentState!.validate()) {
+      await onUploadFile(context);
       var registerUser = {
         "name": fullName,
         "email": email,
         "password": password,
         "role": 3,
-        "profile_image": 'testing url'
+        "profile_image": fileUrl
       };
       var resp =
           await ApiClient.post(request: registerUser, endPoint: '/user-create');
@@ -107,17 +134,17 @@ class CreateAccountViewModel extends BaseViewModel {
         // File is an image
         // model.user!.image = filePath!.path!;
         print('Image File');
-
-        EncoreDialogs.showSuccessAlert(
-          context,
-          okButtonLabel: 'Ok',
-          title: 'Image File Path',
-          message: filePath!.path!,
-          onConfirm: () {
-            // onDeleteFile();
-            Navigator.pop(context);
-          },
-        );
+        // await onUploadFile(context);
+        // EncoreDialogs.showSuccessAlert(
+        //   context,
+        //   okButtonLabel: 'Ok',
+        //   title: 'Image File Path',
+        //   message: filePath!.path!,
+        //   onConfirm: () {
+        //     // onDeleteFile();
+        //     Navigator.pop(context);
+        //   },
+        // );
 
         // fileSize = await getFileSize(filePath!.path!);
 

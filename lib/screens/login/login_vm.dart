@@ -1,8 +1,10 @@
 import 'package:encore/constants/constants.dart';
+import 'package:encore/screens/login/model/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../network/api_client.dart';
+import '../../utils/preferences.dart';
 import '../../widgets/dialogs/encore_dialogs.dart';
 import '../tasks/tasks_vu.dart';
 
@@ -51,7 +53,12 @@ class LoginViewModel extends BaseViewModel {
       print(resp);
 
       if (resp['status'] == 'Ok') {
-        ApiClient.prefs!.setString('token', ApiClient.authToken);
+        final UserProfile profile = UserProfile();
+        profile.data = Data.fromJson(resp['data']['data']);
+        print(profile.data);
+        ApiClient.prefs!
+            .setString('token', ApiClient.authToken); // Omair on Ahmad's desk
+        Preferences.saveUser(profile);
         EncoreStyles.userId = resp['data']['data']['id'];
         EncoreDialogs.showSuccessAlert(
           context,

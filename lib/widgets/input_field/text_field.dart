@@ -70,6 +70,7 @@ class EncoreTextField extends StatelessWidget {
           ),
         ),
         TextFormField(
+          
           enabled: enabled,
           autofocus: autoFocus,
           focusNode: focusNode,
