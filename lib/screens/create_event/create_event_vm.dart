@@ -15,6 +15,9 @@ import '../../widgets/dialogs/encore_dialogs.dart';
 class CreateEventViewModel extends BaseViewModel {
   Event? model;
   String profileUrl = '';
+  String hour = '';
+  String followupDateTime = '';
+  String minute = '';
   BuildContext context;
   final formKey = GlobalKey<FormState>();
   CreateEventViewModel(this.context, this.model) {
@@ -35,8 +38,18 @@ class CreateEventViewModel extends BaseViewModel {
 
   removeTimeFromDate(String dateTimeString) {
     // Remove the last eight characters from the string (the period, the two digits representing the hundredths of a second, and the four digits representing the milliseconds)
-    model!.followupDateTime =
-        dateTimeString.substring(0, dateTimeString.length - 8);
+
+    DateTime dateTime = DateTime.parse(dateTimeString);
+    hour = dateTime.hour.toString();
+    minute = dateTime.minute.toString();
+    followupDateTime = dateTimeString.substring(0, dateTimeString.length - 8);
+    print(model!.followupDateTime);
+    print(hour);
+    print(minute);
+    if (model != null) {
+      hourController.text = hour;
+      minuteController.text = minute;
+    }
   }
 
   TextEditingController noteController = TextEditingController();

@@ -21,11 +21,14 @@ class ProfileViewModel extends BaseViewModel {
 
   String profileUrl = '';
   String? userName;
-  dalateAccount(BuildContext context) async {
+  deleteAccount(BuildContext context) async {
+    EncoreDialogs.showProgress(context, title: 'Deleting User');
     var resp = await ApiClient.get(request: {}, endPoint: '/delete-user');
     print(resp);
-
+    hideProgress(context);
     if (resp['status'] == 'Ok') {
+      await ApiClient.prefs!.clear();
+      ApiClient.authToken = '';
       EncoreDialogs.showSuccessAlert(
         context,
         title: 'Success',

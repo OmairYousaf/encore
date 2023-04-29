@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:encore/constants/constants.dart';
 import 'package:encore/screens/login/login_vu.dart';
+import 'package:encore/widgets/dialogs/encore_dialogs.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -121,8 +122,8 @@ class CreateAccountScreen
                     EncoreButton(
                       btnLabel: 'Sign Up',
                       expanded: true,
-                      onTap: () {
-                        viewModel.signUp(context);
+                      onTap: () async {
+                        await viewModel.signUp(context);
                       },
                     ),
                     const SizedBox(height: 30),

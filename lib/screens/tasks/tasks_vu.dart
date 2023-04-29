@@ -1,11 +1,14 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:encore/constants/constants.dart';
 import 'package:encore/network/api_client.dart';
 import 'package:encore/utils/preferences.dart';
 import 'package:encore/widgets/appBar/encore_appbar.dart';
 import 'package:encore/widgets/dialogs/encore_dialogs.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../loading/progress_indicator.dart';
 import '../../widgets/buttons/action_button.dart';
@@ -48,59 +51,6 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
   @override
   Widget builder(
       BuildContext context, TasksViewModel viewModel, Widget? child) {
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: Text('My List'),
-    //   ),
-    //   body: Column(
-    //     crossAxisAlignment: CrossAxisAlignment.stretch,
-    //     children: [
-    //       Padding(
-    //         padding: const EdgeInsets.all(8.0),
-    //         child: Row(
-    //           children: [
-    //             for (var key in data.first.keys)
-    //               Expanded(
-    //                 flex: 1,
-    //                 child: Text(
-    //                   '$key:',
-    //                   style: TextStyle(
-    //                     fontWeight: FontWeight.bold,
-    //                     color: Colors.grey[600],
-    //                   ),
-    //                 ),
-    //               ),
-    //           ],
-    //         ),
-    //       ),
-    //       Divider(),
-    //       Expanded(
-    //         child: ListView.builder(
-    //           itemCount: data.length,
-    //           itemBuilder: (context, index) {
-    //             return Padding(
-    //               padding: const EdgeInsets.all(8.0),
-    //               child: Row(
-    //                 children: [
-    //                   for (var entry in data[index].entries)
-    //                     Expanded(
-    //                       flex: 1,
-    //                       child: Text(
-    //                         '${entry.value}',
-    //                         style: TextStyle(
-    //                           color: Colors.grey[800],
-    //                         ),
-    //                       ),
-    //                     ),
-    //                 ],
-    //               ),
-    //             );
-    //           },
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
     return WillPopScope(
       onWillPop: () async {
         EncoreDialogs.showErrorAlert(
@@ -123,9 +73,13 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
               const SizedBox(width: 12),
               ActionButton(
                 icon: 'assets/icons/profile.svg',
-                profileImage: viewModel.profileUrl != ''
-                    ? Image.network(
-                        viewModel.profileUrl,
+                profileImage: !viewModel.profileUrl.endsWith('no_image')
+                    ? CachedNetworkImage(
+                        placeholder: (context, uri) => SvgPicture.asset(
+                          'assets/icons/account.svg',
+                          // scale: 4.5,
+                        ),
+                        imageUrl: viewModel.profileUrl,
                         fit: BoxFit.cover,
                       )
                     : null,
@@ -319,7 +273,7 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
       height: 48,
       decoration: const BoxDecoration(color: Color(0xffF2F2F2)),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 22),
+        padding: EdgeInsets.symmetric(horizontal: 8),
         child: Row(
           children: const [
             Expanded(
@@ -405,7 +359,7 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
                     // fontWeight: FontWeight.bold
                   )),
             ),
-            // SizedBox(width: 18),
+            SizedBox(width: 7),
             Expanded(
               flex: 1,
               child: Text('Date',
@@ -469,23 +423,64 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
 
   Widget lowerContainer1(TasksViewModel vm, int index, BuildContext context) {
     vm.eventsList[index].name = vm.getName(vm.eventsList[index].name!);
-    vm.eventDateTime = vm.removeLastTwoZerosAndPreviousColumn(
-        vm.eventsList[index].followupDateTime!);
+    vm.eventDateTime =
+        vm.removeLastTwoZerosAndPreviousColumn(vm.eventsList[index].createdAt!);
     vm.eventDate = vm.getDate(vm.eventDateTime);
     vm.eventTime = vm.getTime(vm.eventDateTime);
-    return GestureDetector(
-      onTap: () {
-        print('event');
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CreateEventScreen(vm.eventsList[index])));
+    return
+        // Slidable(
+        //   endActionPane: ActionPane(
+        //     extentRatio: 0.25,
+        //     motion: const ScrollMotion(),
+        //     children: [
+        //       // A SlidableAction can have an icon and/or a label.
+        //       SlidableAction(
+        //         // padding: EdgeInsets.zero,
+        //         spacing: 0,
+        //         onPressed: (BuildContext context) {
+        //           print('object');
+        //         },
+        //         backgroundColor: Color(0xFFFE4A49),
+        //         foregroundColor: Colors.white,
+        //         icon: Icons.delete,
+        //         label: 'Delete',
+        //       ),
+        //     ],
+        //   ),
+        GestureDetector(
+      onLongPress: () async {
+        EncoreDialogs.showSuccessAlert(
+          context,
+          title: 'Delete Event?',
+          message: 'Are u sure to delete',
+          onCancel: () {
+            Navigator.pop(context);
+          },
+          onConfirm: () async {
+            Navigator.pop(context);
+            // EncoreDialogs.showProgress(context,
+            //     title: 'Deleting Event please wait');
+            await vm.deleteEvent(context, vm.eventsList[index].id.toString());
+            // hideProgress(context);
+            await vm.getEvents(context);
+            // Navigator.pop(context);
+          },
+        );
+
+        // EncoreDialogs.showSuccessAlert(
+        //   context,
+        //   title: 'Event Deleted',
+        //   message: 'Event deleted successfully',
+        //   onConfirm: () async {
+        //     Navigator.pop(context);
+        //   },
+        // );
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 22),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               children: [
                 Expanded(
@@ -527,7 +522,15 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
                     )),
                 // SizedBox(width: 12),
 
-                SvgPicture.asset('assets/icons/edit.svg')
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  CreateEventScreen(vm.eventsList[index])));
+                    },
+                    child: SvgPicture.asset('assets/icons/edit.svg'))
               ],
             ),
           ),
@@ -539,7 +542,7 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
               vm.notifyListeners();
             },
             child: Padding(
-              padding: const EdgeInsets.only(left: 22),
+              padding: const EdgeInsets.only(left: 8),
               child: Row(
                 children: [
                   const Text(
@@ -564,6 +567,7 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
         ],
       ),
     );
+    // );
   }
 
   Widget lowerContainer2(TasksViewModel vm, int index, BuildContext context) {
@@ -572,122 +576,120 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
         vm.followUpList[index].followupDateTime!);
     vm.followUpDate = vm.getDate(vm.followUpDateTime);
     vm.followUpTime = vm.getTime(vm.followUpDateTime);
-    return GestureDetector(
-      onTap: () {
-        print('follow up');
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    CreateEventScreen(vm.followUpList[index])));
-      },
-      child: Container(
-          // height: 48,
-          decoration: const BoxDecoration(),
-          child: Column(children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Row(
+    return Container(
+        // height: 48,
+        decoration: const BoxDecoration(),
+        child: Column(children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              children: [
+                Expanded(
+                    flex: 1, child: Text(vm.followUpList[index].id.toString())),
+                SizedBox(width: 7),
+                Expanded(
+                    flex: 1,
+                    child: Text(
+                      vm.followUpDate,
+                      style: TextStyle(fontSize: 12),
+                    )),
+                Expanded(
+                    flex: 1,
+                    child: Text(
+                      vm.followUpTime,
+                      style: TextStyle(fontSize: 12),
+                    )),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      vm.followUpList[index].name!,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      vm.followUpList[index].followupOccur!,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      vm.followUpList[index].priority!,
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  CreateEventScreen(vm.followUpList[index])));
+                    },
+                    child: SvgPicture.asset('assets/icons/edit.svg'))
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          StatefulBuilder(
+            builder: (BuildContext context,
+                void Function(void Function()) setState) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                      flex: 1,
-                      child: Text(vm.followUpList[index].id.toString())),
-                  Expanded(
-                      flex: 1,
-                      child: Text(
-                        vm.followUpDate,
-                        style: TextStyle(fontSize: 12),
-                      )),
-                  Expanded(
-                      flex: 1,
-                      child: Text(
-                        vm.followUpTime,
-                        style: TextStyle(fontSize: 12),
-                      )),
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Text(
-                        vm.followUpList[index].name!,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Text(
-                        vm.followUpList[index].followupOccur!,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Text(
-                        vm.followUpList[index].priority!,
-                      ),
-                    ),
-                  ),
-                  SvgPicture.asset('assets/icons/edit.svg')
-                ],
-              ),
-            ),
-            const SizedBox(height: 8),
-            StatefulBuilder(
-              builder: (BuildContext context,
-                  void Function(void Function()) setState) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(
-                          () {
-                            vm.followUpList[index].isExpanded =
-                                !vm.followUpList[index].isExpanded!;
-                          },
-                        );
+                  GestureDetector(
+                    onTap: () {
+                      setState(
+                        () {
+                          vm.followUpList[index].isExpanded =
+                              !vm.followUpList[index].isExpanded!;
+                        },
+                      );
 
-                        // vm.notifyListeners();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 12),
-                        child: Row(
-                          children: [
-                            const Text(
-                              'NOTES',
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(width: 8),
-                            SvgPicture.asset(!vm.followUpList[index].isExpanded!
-                                ? 'assets/icons/up.svg'
-                                : 'assets/icons/down.svg')
-                          ],
-                        ),
+                      // vm.notifyListeners();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Row(
+                        children: [
+                          const Text(
+                            'NOTES',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(width: 8),
+                          SvgPicture.asset(!vm.followUpList[index].isExpanded!
+                              ? 'assets/icons/up.svg'
+                              : 'assets/icons/down.svg')
+                        ],
                       ),
                     ),
-                    vm.followUpList[index].isExpanded!
-                        ? Padding(
-                            padding: const EdgeInsets.only(left: 24),
-                            child: Text(
-                              vm.followUpList[index].note!,
-                              maxLines: 7,
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-                    const Divider(thickness: 2)
-                  ],
-                );
-              },
-            ),
-          ])),
-    );
+                  ),
+                  vm.followUpList[index].isExpanded!
+                      ? Padding(
+                          padding: const EdgeInsets.only(left: 24),
+                          child: Text(
+                            vm.followUpList[index].note!,
+                            maxLines: 7,
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                  const Divider(thickness: 2)
+                ],
+              );
+            },
+          ),
+        ]));
   }
 
   // Widget container(Color color) {

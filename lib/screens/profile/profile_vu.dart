@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:encore/network/api_client.dart';
 import 'package:encore/utils/preferences.dart';
 import 'package:encore/widgets/dialogs/encore_dialogs.dart';
@@ -32,9 +33,13 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
             SizedBox(width: 12),
             ActionButton(
               icon: 'assets/icons/profile.svg',
-              profileImage: viewModel.profileUrl != ''
-                  ? Image.network(
-                      viewModel.profileUrl,
+              profileImage: !viewModel.profileUrl.endsWith('no_image')
+                  ? CachedNetworkImage(
+                      placeholder: (context, uri) => SvgPicture.asset(
+                        'assets/icons/account.svg',
+                        // scale: 4.5,
+                      ),
+                      imageUrl: viewModel.profileUrl,
                       fit: BoxFit.cover,
                     )
                   : null,
@@ -56,17 +61,20 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
             const SizedBox(height: 12),
             ClipOval(
               child: SizedBox.fromSize(
-                size: const Size.fromRadius(35),
-                child: viewModel.profileUrl == ''
-                    ? SvgPicture.asset(
-                        'assets/icons/profile_icon.svg',
-                        fit: BoxFit.cover,
-                      )
-                    : Image.network(
-                        viewModel.profileUrl,
-                        fit: BoxFit.cover,
-                      ),
-              ),
+                  size: const Size.fromRadius(35),
+                  child: viewModel.profileUrl.endsWith('no_image')
+                      ? SvgPicture.asset(
+                          'assets/icons/profile.svg',
+                          fit: BoxFit.cover,
+                        )
+                      : CachedNetworkImage(
+                          placeholder: (context, uri) => SvgPicture.asset(
+                            'assets/icons/account.svg',
+                            // scale: 4.5,
+                          ),
+                          imageUrl: viewModel.profileUrl,
+                          fit: BoxFit.cover,
+                        )),
             ),
             const SizedBox(height: 24),
             Text(
@@ -98,8 +106,8 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
                   context,
                   title: 'Delete Account',
                   message: 'Are you confirm to delete account',
-                  onConfirm: () {
-                    viewModel.dalateAccount(context);
+                  onConfirm: () async {
+                    viewModel.deleteAccount(context);
                     // Navigator.pushReplacement(
                     //     context,
                     //     MaterialPageRoute(
@@ -124,6 +132,7 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
                     message: 'Are you confirm to logout',
                     onConfirm: () async {
                       print('object');
+
                       var resp = await ApiClient.post(
                           request: {}, endPoint: '/logout');
 

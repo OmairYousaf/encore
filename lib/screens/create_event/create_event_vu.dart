@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:encore/screens/create_event/create_event_vm.dart';
 import 'package:encore/widgets/date_picker/date_picker.dart';
 import 'package:encore/widgets/dialogs/encore_dialogs.dart';
@@ -15,7 +16,9 @@ import '../profile/profile_vu.dart';
 import 'model/model.dart';
 
 class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
-  CreateEventScreen(this.model, {super.key});
+  CreateEventScreen(this.model, {super.key}) {
+    print(model);
+  }
   Event? model;
   String? selectedEvent = 'How event occured?';
   String? selectedFollowUp = 'How Follow-up occured?';
@@ -51,9 +54,13 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
             const SizedBox(width: 12),
             ActionButton(
               icon: 'assets/icons/profile.svg',
-              profileImage: viewModel.profileUrl != ''
-                  ? Image.network(
-                      viewModel.profileUrl,
+              profileImage: !viewModel.profileUrl.endsWith('no_image')
+                  ? CachedNetworkImage(
+                      placeholder: (context, uri) => SvgPicture.asset(
+                        'assets/icons/account.svg',
+                        // scale: 4.5,
+                      ),
+                      imageUrl: viewModel.profileUrl,
                       fit: BoxFit.cover,
                     )
                   : null,
@@ -182,14 +189,14 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
-                    if (viewModel.formKey.currentState == null ||
-                        viewModel.formKey.currentState!.validate())
-                      SizedBox(height: 8.0)
-                    else
-                      Text(
-                        'Please enter some text',
-                        style: TextStyle(color: Colors.red),
-                      ),
+                    // if (viewModel.formKey.currentState == null ||
+                    //     viewModel.formKey.currentState!.validate())
+                    //   SizedBox(height: 8.0)
+                    // else
+                    //   Text(
+                    //     'Please enter some text',
+                    //     style: TextStyle(color: Colors.red),
+                    //   ),
                   ],
                 ),
 
@@ -247,6 +254,13 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                             viewModel.contact!.phones!.first.value!;
                         viewModel.notifyListeners();
                       }),
+                // if (viewModel.contact == null)
+                //   SizedBox(height: 8.0)
+                // else
+                //   Text(
+                //     'Please enter some text',
+                //     style: TextStyle(color: Colors.red),
+                //   ),
                 const SizedBox(height: 24),
                 Text(
                   'Set Your Follow Up Date and Time',
@@ -263,7 +277,7 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                       EncoreDatePicker(
                           title: model == null
                               ? viewModel.dateFormated
-                              : model!.followupDateTime!,
+                              : viewModel.followupDateTime,
                           onGetDate: (date) {
                             print(date);
                             viewModel.setDate(date!);
@@ -284,7 +298,7 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                             textAlign: TextAlign.center,
                             controller: viewModel.hourController,
                             decoration: InputDecoration(
-                                hintText: '09',
+                                hintText: 'HH',
                                 hintStyle: EncoreStyles.textFieldHint
                                     .copyWith(color: const Color(0xffAFAEAE)),
                                 // contentPadding: const EdgeInsets.all(10),
@@ -310,7 +324,7 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                             textAlign: TextAlign.center,
                             controller: viewModel.minuteController,
                             decoration: InputDecoration(
-                                hintText: '09',
+                                hintText: 'MM',
                                 hintStyle: EncoreStyles.textFieldHint
                                     .copyWith(color: const Color(0xffAFAEAE)),
                                 // contentPadding: const EdgeInsets.all(10),
@@ -468,32 +482,34 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
         backgroundColor: EncoreStyles.primaryColor,
         //Floating action button on Scaffold
         onPressed: () async {
-          viewModel.formKey.currentState!.validate();
-          viewModel.formKey.currentState!.save();
-          if (viewModel.contact != null) {
-            viewModel.name = viewModel.getName(viewModel.contact!.displayName!);
-          }
-          if (viewModel.selectedDate != null) {
-            viewModel.getDateTime();
-          }
-          if (viewModel.dropdownValue1 == 'How event occured?' ||
-              viewModel.note == '' ||
-              viewModel.name == '' ||
-              viewModel.formattedDateTime == '' ||
-              viewModel.dropdownValue2 == 'How Follow-up occured?' ||
-              viewModel.dropdownValue3 == 'Priority') {
-            EncoreDialogs.showErrorAlert(
-              context,
-              title: 'Alert',
-              message: 'All Fields are necessary!',
-              onCancel: () => Navigator.pop(context),
-              onConfirm: () => Navigator.pop(context),
-            );
-          } else {
-            // viewModel.name = viewModel.getName(viewModel.contact!.displayName!);
-            // viewModel.getDateTime();
-            print('object');
-            await viewModel.createEvent();
+          if (viewModel.formKey.currentState!.validate()) {
+            print('validate');
+            if (viewModel.contact == null || viewModel.selectedDate == null) {
+              viewModel.formKey.currentState!.save();
+              if (viewModel.contact == null) {
+                EncoreDialogs.showErrorAlert(
+                  context,
+                  title: 'Alert',
+                  message: 'Select Contact First',
+                  onCancel: () => Navigator.pop(context),
+                  // onConfirm: () => Navigator.pop(context),
+                );
+              } else if (viewModel.selectedDate == null) {
+                EncoreDialogs.showErrorAlert(
+                  context,
+                  title: 'Alert',
+                  message: 'Select Date Time',
+                  onCancel: () => Navigator.pop(context),
+                  // onConfirm: () => Navigator.pop(context),
+                );
+              }
+            } else {
+              viewModel.name =
+                  viewModel.getName(viewModel.contact!.displayName!);
+              viewModel.getDateTime();
+              print('Event Create');
+              await viewModel.createEvent();
+            }
           }
 
           // Navigator.push(
@@ -568,7 +584,12 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
   }
 }
 
-Widget _card(String label, String icon, {VoidCallback? onTap}) {
+Widget _card(
+  String label,
+  String icon, {
+  VoidCallback? onTap,
+}) {
+  String message;
   return EncoreCard(
     onTap: onTap,
     height: 56,

@@ -13,6 +13,11 @@ import '../create_event/model/model.dart';
 class TasksViewModel extends BaseViewModel {
   TasksViewModel() {
     getPrifileUrl();
+    FadeInImage.assetNetwork(
+      placeholder: 'assets/images/placeholder.png',
+      image: 'https://example.com/images/image1.jpg',
+      fit: BoxFit.cover,
+    );
     for (int i = 0; i < eventsList.length; i++) {
       print(eventsList[i].toJson());
     }
@@ -93,6 +98,22 @@ class TasksViewModel extends BaseViewModel {
       eventsList = resp['data'].data;
 
       await getFollowUp(context);
+    } else {
+      setBusy(false);
+      EncoreDialogs.showErrorAlert(context,
+          title: 'Error', message: resp['message']);
+    }
+  }
+
+  Future<void> deleteEvent(BuildContext context, String id) async {
+    setBusy(true);
+
+    final resp = await ApiClient.get(
+      request: {},
+      endPoint: '/delete-event/$id',
+    );
+    if (resp['status'] == 'Ok') {
+      setBusy(false);
     } else {
       setBusy(false);
       EncoreDialogs.showErrorAlert(context,

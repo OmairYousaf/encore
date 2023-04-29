@@ -94,18 +94,19 @@ class CreateAccountViewModel extends BaseViewModel {
   signUp(BuildContext context) async {
     formKey.currentState!.save();
     if (formKey.currentState!.validate()) {
+      EncoreDialogs.showProgress(context, title: 'Creating User');
       await onUploadFile(context);
       var registerUser = {
         "name": fullName,
         "email": email,
         "password": password,
         "role": 3,
-        "profile_image": fileUrl
+        "profile_image": fileUrl == '' ? 'no_image' : fileUrl
       };
       var resp =
           await ApiClient.post(request: registerUser, endPoint: '/user-create');
       print(resp);
-
+      hideProgress(context);
       if (resp['status'] == 'Ok') {
         EncoreDialogs.showSuccessAlert(
           context,
