@@ -27,7 +27,7 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
         preferredSize: Size.fromHeight(95),
         child: EncoreAppBar(
           addBackButton: false,
-          title: 'encor',
+          title: 'encore',
           actions: [
             // ActionButton(icon: 'assets/icons/bell_icon.svg'),
             SizedBox(width: 12),

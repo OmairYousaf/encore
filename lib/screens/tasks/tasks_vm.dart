@@ -90,9 +90,11 @@ class TasksViewModel extends BaseViewModel {
 
   Future<void> getEvents(BuildContext context) async {
     setBusy(true);
+    // EncoreDialogs.showProgress(context, title: 'Getting Records');
     final resp = await ApiClient.get(
         request: {}, endPoint: '/event-list', fromJson: EventList.fromJson);
     if (resp['status'] == 'Ok') {
+      // hideProgress(context);
       eventsList.clear();
 
       eventsList = resp['data'].data;
@@ -122,9 +124,11 @@ class TasksViewModel extends BaseViewModel {
   }
 
   Future<void> getFollowUp(BuildContext context) async {
+    // EncoreDialogs.showProgress(context, title: 'Getting Records');
     final resp = await ApiClient.post(
         request: {}, endPoint: '/followup-list', fromJson: EventList.fromJson);
     if (resp['status'] == 'Ok') {
+      // hideProgress(context);
       followUpList.clear();
       followUpList = resp['data'].data;
       setBusy(false);

@@ -49,7 +49,7 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
         preferredSize: const Size.fromHeight(95),
         child: EncoreAppBar(
           addBackButton: false,
-          title: 'encor',
+          title: 'encore',
           actions: [
             // const ActionButton(icon: 'assets/icons/bell_icon.svg'),
             const SizedBox(width: 12),

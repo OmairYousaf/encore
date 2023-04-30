@@ -45,7 +45,9 @@ class _EncoreAppBarState extends State<EncoreAppBar> {
                 ? ActionButton(
                     icon: 'assets/icons/back.svg',
                     onTap: widget.onBackPress ?? () => Navigator.pop(context))
-                : const SizedBox(),
+                : const SizedBox(
+                    width: 32,
+                  ),
             Text(widget.title,
                 style: GoogleFonts.oswald(
                     fontSize: 30,

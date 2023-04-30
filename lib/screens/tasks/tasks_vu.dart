@@ -68,7 +68,7 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
           preferredSize: const Size.fromHeight(95),
           child: EncoreAppBar(
             addBackButton: false,
-            title: 'encor',
+            title: 'encore',
             actions: [
               const SizedBox(width: 12),
               ActionButton(
@@ -143,6 +143,7 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
               if (value != null) {
                 await viewModel.getEvents(context);
                 await viewModel.getFollowUp(context);
+                viewModel.notifyListeners();
                 // viewModel.eventsList.add(value);
                 // viewModel.followUpList.addAll([value]);
                 // viewModel.notifyListeners();
@@ -525,10 +526,20 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
                 GestureDetector(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  CreateEventScreen(vm.eventsList[index])));
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      CreateEventScreen(vm.eventsList[index])))
+                          .then((value) async {
+                        if (value != null) {
+                          await vm.getEvents(context);
+                          await vm.getFollowUp(context);
+                          // viewModel.eventsList.add(value);
+                          // viewModel.followUpList.addAll([value]);
+                          // viewModel.notifyListeners();
+                        }
+                      });
+                      ;
                     },
                     child: SvgPicture.asset(
                       'assets/icons/edit.svg',
