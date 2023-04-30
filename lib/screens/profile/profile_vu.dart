@@ -99,10 +99,10 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
             ButtonWithSuffix(
               color: const Color(0xff1ECB96),
               btnLabel: 'Delete account',
-              suffixIcon: SvgPicture.asset('assets/icons/delete_account.svg'),
+              suffixIcon: SvgPicture.asset('assets/icons/delete-account.svg'),
               expanded: true,
               onTap: () {
-                EncoreDialogs.showSuccessAlert(
+                EncoreDialogs.showErrorAlert(
                   context,
                   title: 'Delete Account',
                   message: 'Are you confirm to delete account',

@@ -69,8 +69,8 @@ class LoginScreen extends ViewModelBuilderWidget<LoginViewModel> {
                           onTap: viewModel.onObsecure,
                           child: SvgPicture.asset(
                               viewModel.obsecureText
-                                  ? 'assets/icons/show_password_icon.svg'
-                                  : 'assets/icons/hide_password_icon.svg',
+                                  ? 'assets/icons/hide-password.svg'
+                                  : 'assets/icons/show-password.svg',
                               fit: BoxFit.scaleDown),
                         ),
                         onSaved: viewModel.onPasswordSaved,

@@ -4,6 +4,7 @@ import 'package:encore/widgets/date_picker/date_picker.dart';
 import 'package:encore/widgets/dialogs/encore_dialogs.dart';
 import 'package:encore/widgets/input_field/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -170,6 +171,7 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                   children: [
                     TextFormField(
                       maxLines: 6,
+                      controller: viewModel.noteController,
                       decoration: InputDecoration(
                         hintText: 'Add notes',
                         border: OutlineInputBorder(
@@ -246,12 +248,25 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                         // viewModel.setBusy(true);
                         // EncoreDialogs.showProgress(context,
                         //     title: 'loading, please wait...');
-                        viewModel.contact = await viewModel.pickContact();
+                        await viewModel.pickContact();
                         // hideProgress(context);
                         // viewModel.setBusy(false);
                         // model!.phone = viewModel.contact!.phones!.first.value!;
-                        viewModel.contactNo =
-                            viewModel.contact!.phones!.first.value!;
+                        if (viewModel.contact != null) {
+                          viewModel.contactNo =
+                              viewModel.contact!.phoneNumbers!.first;
+                          model!.phone = viewModel.contact!.phoneNumbers!.first;
+                          model!.name =
+                              viewModel.getName(viewModel.contact!.fullName!);
+                        } else {
+                          viewModel.contactNo = 'Import Contact';
+                          model!.phone = 'Import Contact';
+                        }
+                        if (model != null) {
+                          // model!.phone = viewModel.contact!.phoneNumbers!.first;
+                          // model!.name =
+                          //     viewModel.getName(viewModel.contact!.fullName!);
+                        }
                         viewModel.notifyListeners();
                       }),
                 // if (viewModel.contact == null)
@@ -284,7 +299,12 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                           }),
                       const SizedBox(width: 12),
                       Flexible(
-                        child: TextField(
+                        child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'^1[0-2]|[1-9]$')),
+                            ],
                             onChanged: (text) {
                               if (text.length > 2) {
                                 viewModel.hourController.value =
@@ -294,7 +314,15 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                                   selection: TextSelection.collapsed(offset: 2),
                                 );
                               }
+                              // viewModel
+                              //     .makeHours(viewModel.hourController.text);
                             },
+                            // validator: (value) {
+                            //   if (value!.isEmpty) {
+                            //     return 'Hours';
+                            //   }
+                            //   return null;
+                            // },
                             textAlign: TextAlign.center,
                             controller: viewModel.hourController,
                             decoration: InputDecoration(
@@ -310,7 +338,12 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                                         color: EncoreStyles.cardBorderColor)))),
                       ),
                       Flexible(
-                        child: TextField(
+                        child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'^([1-5]?[0-9]|60)$')),
+                            ],
                             onChanged: (text) {
                               if (text.length > 2) {
                                 viewModel.minuteController.value =
@@ -320,7 +353,15 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                                   selection: TextSelection.collapsed(offset: 2),
                                 );
                               }
+                              // viewModel
+                              //     .makeMinutes(viewModel.minuteController.text);
                             },
+                            // validator: (value) {
+                            //   if (value!.isEmpty) {
+                            //     return 'Minutes';
+                            //   }
+                            //   return null;
+                            // },
                             textAlign: TextAlign.center,
                             controller: viewModel.minuteController,
                             decoration: InputDecoration(
@@ -484,31 +525,56 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
         onPressed: () async {
           if (viewModel.formKey.currentState!.validate()) {
             print('validate');
-            if (viewModel.contact == null || viewModel.selectedDate == null) {
-              viewModel.formKey.currentState!.save();
-              if (viewModel.contact == null) {
-                EncoreDialogs.showErrorAlert(
-                  context,
-                  title: 'Alert',
-                  message: 'Select Contact First',
-                  onCancel: () => Navigator.pop(context),
-                  // onConfirm: () => Navigator.pop(context),
-                );
-              } else if (viewModel.selectedDate == null) {
-                EncoreDialogs.showErrorAlert(
-                  context,
-                  title: 'Alert',
-                  message: 'Select Date Time',
-                  onCancel: () => Navigator.pop(context),
-                  // onConfirm: () => Navigator.pop(context),
-                );
-              }
+
+            viewModel.formKey.currentState!.save();
+            if (viewModel.contactNo == 'Import Contact') {
+              EncoreDialogs.showErrorAlert(
+                context,
+                title: 'Alert',
+                message: 'Select Contact First',
+                onCancel: () => Navigator.pop(context),
+                // onConfirm: () => Navigator.pop(context),
+              );
+            } else if (model == null && viewModel.selectedDate == null) {
+              EncoreDialogs.showErrorAlert(
+                context,
+                title: 'Alert',
+                message: 'Select Date Time',
+                onCancel: () => Navigator.pop(context),
+                // onConfirm: () => Navigator.pop(context),
+              );
+            } else if (viewModel.hourController.text == '') {
+              EncoreDialogs.showErrorAlert(
+                context,
+                title: 'Alert',
+                message: 'Add Hours',
+                onCancel: () => Navigator.pop(context),
+                // onConfirm: () => Navigator.pop(context),
+              );
+            } else if (viewModel.minuteController.text == '') {
+              EncoreDialogs.showErrorAlert(
+                context,
+                title: 'Alert',
+                message: 'Add Minutes',
+                onCancel: () => Navigator.pop(context),
+                // onConfirm: () => Navigator.pop(context),
+              );
             } else {
-              viewModel.name =
-                  viewModel.getName(viewModel.contact!.displayName!);
-              viewModel.getDateTime();
-              print('Event Create');
-              await viewModel.createEvent();
+              viewModel.makeHours(viewModel.hourController.text);
+              viewModel.makeMinutes(viewModel.minuteController.text);
+              print(viewModel.hourController.text);
+              print(viewModel.minuteController.text);
+              if (model == null) {
+                viewModel.name =
+                    viewModel.getName(viewModel.contact!.fullName!);
+                viewModel.getDateTime();
+                print('Event Create');
+
+                await viewModel.createEvent();
+              } else {
+                viewModel.getDateTime();
+                await viewModel.updateEvent();
+              }
             }
           }
 
@@ -606,4 +672,23 @@ Widget _card(
       ),
     ),
   );
+}
+
+class _NumberRangeTextInputFormatter extends TextInputFormatter {
+  final int min;
+  final int max;
+
+  _NumberRangeTextInputFormatter({required this.min, required this.max});
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    final input = int.tryParse(newValue.text) ?? 0;
+    if (input < min) {
+      return TextEditingValue(text: '$min');
+    } else if (input > max) {
+      return TextEditingValue(text: '$max');
+    }
+    return newValue;
+  }
 }

@@ -1,11 +1,9 @@
-// import 'package:contact_picker/contact_picker.dart';
-// import 'package:contacts_service/contacts_service.dart';
 import 'package:encore/screens/create_event/model/model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
-// import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:stacked/stacked.dart';
-import 'package:contacts_service/contacts_service.dart';
+import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:intl/intl.dart';
 
 import '../../network/api_client.dart';
@@ -19,13 +17,26 @@ class CreateEventViewModel extends BaseViewModel {
   String followupDateTime = '';
   String minute = '';
   BuildContext context;
+  var maxLength = 12;
+  // ignore: prefer_typing_uninitialized_variables
+  var maxLengthFormatter;
+  final FlutterContactPicker _contactPicker = new FlutterContactPicker();
+  Contact? contact;
+// Create a TextInputFormatter to restrict the number of characters
+
   final formKey = GlobalKey<FormState>();
   CreateEventViewModel(this.context, this.model) {
+    getTimeFormatter();
     getPrifileUrl();
     print(model);
     if (model != null) {
+      contactNo = model!.phone!;
       removeTimeFromDate(model!.followupDateTime!);
     }
+  }
+
+  getTimeFormatter() {
+    maxLengthFormatter = LengthLimitingTextInputFormatter(maxLength);
   }
 
   getPrifileUrl() async {
@@ -40,15 +51,20 @@ class CreateEventViewModel extends BaseViewModel {
     // Remove the last eight characters from the string (the period, the two digits representing the hundredths of a second, and the four digits representing the milliseconds)
 
     DateTime dateTime = DateTime.parse(dateTimeString);
+    selectedDate = dateTime;
     hour = dateTime.hour.toString();
     minute = dateTime.minute.toString();
-    followupDateTime = dateTimeString.substring(0, dateTimeString.length - 8);
+    followupDateTime = dateTimeString.substring(0, dateTimeString.length - 9);
+    DateTime date = DateTime.parse(followupDateTime);
+    followupDateTime = DateFormat("dd MMM yyyy").format(date);
+
     print(model!.followupDateTime);
     print(hour);
     print(minute);
     if (model != null) {
       hourController.text = hour;
       minuteController.text = minute;
+      noteController.text = model!.note!;
     }
   }
 
@@ -61,7 +77,7 @@ class CreateEventViewModel extends BaseViewModel {
   String dropdownValue3 = 'Priority';
   String formattedDateTime = '';
   // ContactPicker contactPicker = ContactPicker();
-  Contact? contact;
+  // Contact? contact;
   String dateFormated = 'Select Date';
   String contactNo = 'Import Contact';
   String note = '';
@@ -79,7 +95,7 @@ class CreateEventViewModel extends BaseViewModel {
       setBusy(true);
 
       try {
-        contact = await ContactsService.openDeviceContactPicker();
+        contact = await _contactPicker.selectContact();
         print(contact);
         // Perform a form operation here
       }
@@ -108,7 +124,10 @@ class CreateEventViewModel extends BaseViewModel {
         context,
         title: 'Error',
         message: 'selected contact must be non-null',
-        onConfirm: () => setBusy(false),
+        onConfirm: () {
+          setBusy(false);
+          Navigator.pop(context);
+        },
       );
     }
   }
@@ -116,7 +135,7 @@ class CreateEventViewModel extends BaseViewModel {
   setDate(int timeStamp) {
     selectedDate = DateTime.fromMillisecondsSinceEpoch(timeStamp);
     dateFormated = DateFormat('d MMM yyyy').format(selectedDate!);
-
+    followupDateTime = DateFormat('d MMM yyyy').format(selectedDate!);
     notifyListeners();
     // return dateFormated;
   }
@@ -209,6 +228,14 @@ class CreateEventViewModel extends BaseViewModel {
     return name;
   }
 
+  makeHours(String hrs) {
+    hourController.text = hrs.padLeft(2, '0');
+  }
+
+  makeMinutes(String mnts) {
+    minuteController.text = mnts.padLeft(2, '0');
+  }
+
   createEvent() async {
     var eventRequest = {
       "event_occur": dropdownValue1,
@@ -216,10 +243,10 @@ class CreateEventViewModel extends BaseViewModel {
       "note": note,
       "followup_date_time": formattedDateTime,
       "priority": dropdownValue3,
-      "name": contact!.displayName,
+      "name": name,
       "phone": contactNo
     };
-
+    EncoreDialogs.showProgress(context, title: 'Creating Event');
     print(eventRequest);
     Event event = Event.fromJson(eventRequest);
     print(event);
@@ -229,6 +256,7 @@ class CreateEventViewModel extends BaseViewModel {
     print(resp);
 
     if (resp['status'] == 'Ok') {
+      hideProgress(context);
       EncoreDialogs.showSuccessAlert(
         context,
         title: 'Success',
@@ -237,7 +265,47 @@ class CreateEventViewModel extends BaseViewModel {
           print('Event Created Successfully');
           Navigator.pop(context);
 
-          eventRequest['name'] = name;
+          // eventRequest['name'] = name;
+          Navigator.pop(context, event);
+          // Navigator.push(context,
+          //     MaterialPageRoute(builder: (context) => const LoginScreen()));
+        },
+      );
+    } else {
+      EncoreDialogs.showErrorAlert(context,
+          title: 'Error', message: resp['ErrorMessage']);
+    }
+  }
+
+  updateEvent() async {
+    var eventRequest = {
+      "event_id": model!.id,
+      "event_occur": model!.eventOccur,
+      "followup_occur": model!.followupOccur,
+      "note": noteController.text,
+      "followup_date_time": formattedDateTime,
+      "priority": model!.priority,
+      "name": model!.name,
+      "phone": model!.phone
+    };
+    EncoreDialogs.showProgress(context, title: 'Updating Event');
+    print(eventRequest);
+    Event event = Event.fromJson(eventRequest);
+    print(event);
+
+    var resp =
+        await ApiClient.post(request: eventRequest, endPoint: '/event-edit');
+    print(resp);
+
+    if (resp['status'] == 'Ok') {
+      hideProgress(context);
+      EncoreDialogs.showSuccessAlert(
+        context,
+        title: 'Success',
+        message: 'Event Updated Successfully',
+        onConfirm: () {
+          print('Event Updated Successfully');
+          Navigator.pop(context);
           Navigator.pop(context, event);
           // Navigator.push(context,
           //     MaterialPageRoute(builder: (context) => const LoginScreen()));

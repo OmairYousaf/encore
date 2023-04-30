@@ -422,7 +422,7 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
   }
 
   Widget lowerContainer1(TasksViewModel vm, int index, BuildContext context) {
-    vm.eventsList[index].name = vm.getName(vm.eventsList[index].name!);
+    // vm.eventsList[index].name = vm.getName(vm.eventsList[index].name!);
     vm.eventDateTime =
         vm.removeLastTwoZerosAndPreviousColumn(vm.eventsList[index].createdAt!);
     vm.eventDate = vm.getDate(vm.eventDateTime);
@@ -449,21 +449,19 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
         //   ),
         GestureDetector(
       onLongPress: () async {
-        EncoreDialogs.showSuccessAlert(
+        EncoreDialogs.showErrorAlert(
           context,
-          title: 'Delete Event?',
-          message: 'Are u sure to delete',
+          title: 'Delete Event!',
+          message: 'Are u sure to delete this event?',
+          enableCancelButton: true,
           onCancel: () {
             Navigator.pop(context);
           },
           onConfirm: () async {
             Navigator.pop(context);
-            // EncoreDialogs.showProgress(context,
-            //     title: 'Deleting Event please wait');
             await vm.deleteEvent(context, vm.eventsList[index].id.toString());
-            // hideProgress(context);
+
             await vm.getEvents(context);
-            // Navigator.pop(context);
           },
         );
 
@@ -493,12 +491,14 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
                   flex: 1,
                   child: Text(
                     vm.eventDate,
+                    style: TextStyle(fontSize: 13),
                   ),
                 ),
                 Expanded(
                   flex: 1,
                   child: Text(
                     vm.eventTime,
+                    style: TextStyle(fontSize: 13),
                   ),
                 ),
 
@@ -530,7 +530,11 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
                               builder: (context) =>
                                   CreateEventScreen(vm.eventsList[index])));
                     },
-                    child: SvgPicture.asset('assets/icons/edit.svg'))
+                    child: SvgPicture.asset(
+                      'assets/icons/edit.svg',
+                      width: 12,
+                      height: 12,
+                    ))
               ],
             ),
           ),
@@ -571,125 +575,163 @@ class TasksScreen extends ViewModelBuilderWidget<TasksViewModel> {
   }
 
   Widget lowerContainer2(TasksViewModel vm, int index, BuildContext context) {
-    vm.followUpList[index].name = vm.getName(vm.followUpList[index].name!);
+    // vm.followUpList[index].name = vm.getName(vm.followUpList[index].name!);
     vm.followUpDateTime = vm.removeLastTwoZerosAndPreviousColumn(
         vm.followUpList[index].followupDateTime!);
     vm.followUpDate = vm.getDate(vm.followUpDateTime);
     vm.followUpTime = vm.getTime(vm.followUpDateTime);
-    return Container(
-        // height: 48,
-        decoration: const BoxDecoration(),
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
-              children: [
-                Expanded(
-                    flex: 1, child: Text(vm.followUpList[index].id.toString())),
-                SizedBox(width: 7),
-                Expanded(
-                    flex: 1,
-                    child: Text(
-                      vm.followUpDate,
-                      style: TextStyle(fontSize: 12),
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Text(
-                      vm.followUpTime,
-                      style: TextStyle(fontSize: 12),
-                    )),
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      vm.followUpList[index].name!,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      vm.followUpList[index].followupOccur!,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      vm.followUpList[index].priority!,
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  CreateEventScreen(vm.followUpList[index])));
-                    },
-                    child: SvgPicture.asset('assets/icons/edit.svg'))
-              ],
-            ),
-          ),
-          const SizedBox(height: 8),
-          StatefulBuilder(
-            builder: (BuildContext context,
-                void Function(void Function()) setState) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(
-                        () {
-                          vm.followUpList[index].isExpanded =
-                              !vm.followUpList[index].isExpanded!;
-                        },
-                      );
+    return GestureDetector(
+      onLongPress: () async {
+        EncoreDialogs.showErrorAlert(
+          context,
+          title: 'Delete Event!',
+          message: 'Are u sure to delete this event?',
+          enableCancelButton: true,
+          onCancel: () {
+            Navigator.pop(context);
+          },
+          onConfirm: () async {
+            Navigator.pop(context);
+            await vm.deleteEvent(context, vm.followUpList[index].id.toString());
 
-                      // vm.notifyListeners();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Row(
-                        children: [
-                          const Text(
-                            'NOTES',
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(width: 8),
-                          SvgPicture.asset(!vm.followUpList[index].isExpanded!
-                              ? 'assets/icons/up.svg'
-                              : 'assets/icons/down.svg')
-                        ],
-                      ),
+            await vm.getEvents(context);
+          },
+        );
+
+        // EncoreDialogs.showSuccessAlert(
+        //   context,
+        //   title: 'Event Deleted',
+        //   message: 'Event deleted successfully',
+        //   onConfirm: () async {
+        //     Navigator.pop(context);
+        //   },
+        // );
+      },
+      child: Column(children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Row(
+            children: [
+              Expanded(
+                  flex: 1, child: Text(vm.followUpList[index].id.toString())),
+              SizedBox(width: 7),
+              Expanded(
+                  flex: 1,
+                  child: Text(
+                    vm.followUpDate,
+                    style: TextStyle(fontSize: 13),
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: Text(
+                    vm.followUpTime,
+                    style: TextStyle(fontSize: 13),
+                  )),
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    vm.followUpList[index].name!,
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    vm.followUpList[index].followupOccur!,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    vm.followUpList[index].priority!,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    CreateEventScreen(vm.followUpList[index])))
+                        .then((value) async {
+                      if (value != null) {
+                        await vm.getEvents(context);
+                        await vm.getFollowUp(context);
+                        // viewModel.eventsList.add(value);
+                        // viewModel.followUpList.addAll([value]);
+                        // viewModel.notifyListeners();
+                      }
+                    });
+                  },
+                  child: SvgPicture.asset(
+                    'assets/icons/edit.svg',
+                    width: 12,
+                    height: 12,
+                  ))
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        StatefulBuilder(
+          builder:
+              (BuildContext context, void Function(void Function()) setState) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(
+                      () {
+                        vm.followUpList[index].isExpanded =
+                            !vm.followUpList[index].isExpanded!;
+                      },
+                    );
+
+                    // vm.notifyListeners();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Row(
+                      children: [
+                        const Text(
+                          'NOTES',
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(width: 8),
+                        SvgPicture.asset(!vm.followUpList[index].isExpanded!
+                            ? 'assets/icons/up.svg'
+                            : 'assets/icons/down.svg')
+                      ],
                     ),
                   ),
-                  vm.followUpList[index].isExpanded!
-                      ? Padding(
-                          padding: const EdgeInsets.only(left: 24),
-                          child: Text(
-                            vm.followUpList[index].note!,
-                            maxLines: 7,
-                          ),
-                        )
-                      : const SizedBox.shrink(),
-                  const Divider(thickness: 2)
-                ],
-              );
-            },
-          ),
-        ]));
+                ),
+                vm.followUpList[index].isExpanded!
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: 24),
+                        child: Text(
+                          vm.followUpList[index].note!,
+                          maxLines: 7,
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                const Divider(thickness: 2)
+              ],
+            );
+          },
+        ),
+      ]),
+    );
   }
 
   // Widget container(Color color) {

@@ -28,7 +28,7 @@ class UpdatePasswordScreen
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ActionButton(
-                    icon: 'assets/icons/back.svg',
+                    icon: 'assets/icons/back-button.svg',
                     onTap: () => Navigator.pop(context)),
                 const SizedBox(height: 24),
                 Align(
@@ -58,8 +58,8 @@ class UpdatePasswordScreen
                       onTap: viewModel.onOldObsecure,
                       child: SvgPicture.asset(
                           viewModel.oldObsecureText
-                              ? 'assets/icons/show_password_icon.svg'
-                              : 'assets/icons/hide_password_icon.svg',
+                              ? 'assets/icons/hide-password.svg'
+                              : 'assets/icons/show-password.svg',
                           fit: BoxFit.scaleDown),
                     ),
                     viewModel.oldObsecureText),
@@ -72,8 +72,8 @@ class UpdatePasswordScreen
                       onTap: viewModel.onNewObsecure,
                       child: SvgPicture.asset(
                           viewModel.newObsecureText
-                              ? 'assets/icons/show_password_icon.svg'
-                              : 'assets/icons/hide_password_icon.svg',
+                              ? 'assets/icons/hide-password.svg'
+                              : 'assets/icons/show-password.svg',
                           fit: BoxFit.scaleDown),
                     ),
                     viewModel.newObsecureText),
@@ -86,8 +86,8 @@ class UpdatePasswordScreen
                       onTap: viewModel.onConfNewObsecure,
                       child: SvgPicture.asset(
                           viewModel.confNewObsecureText
-                              ? 'assets/icons/show_password_icon.svg'
-                              : 'assets/icons/hide_password_icon.svg',
+                              ? 'assets/icons/hide-password.svg'
+                              : 'assets/icons/show-password.svg',
                           fit: BoxFit.scaleDown),
                     ),
                     viewModel.confNewObsecureText),
@@ -133,7 +133,7 @@ class UpdatePasswordScreen
           obscureText: obsecureText,
           decoration: InputDecoration(
             prefixIcon: SvgPicture.asset(
-              'assets/icons/lock.svg',
+              'assets/icons/lock-green.svg',
               fit: BoxFit.scaleDown,
             ),
             // counterStyle:
