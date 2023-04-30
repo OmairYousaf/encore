@@ -170,9 +170,13 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFormField(
+                      style: const TextStyle(
+                          color: Color(0xffAFAEAE), fontSize: 16),
                       maxLines: 6,
                       controller: viewModel.noteController,
                       decoration: InputDecoration(
+                        hintStyle: const TextStyle(
+                            color: Color(0xffAFAEAE), fontSize: 16),
                         hintText: 'Add notes',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -300,6 +304,8 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                       const SizedBox(width: 12),
                       Flexible(
                         child: TextFormField(
+                            style: const TextStyle(
+                                color: Color(0xffAFAEAE), fontSize: 16),
                             keyboardType: TextInputType.number,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
@@ -339,6 +345,8 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                       ),
                       Flexible(
                         child: TextFormField(
+                            style: const TextStyle(
+                                color: Color(0xffAFAEAE), fontSize: 16),
                             keyboardType: TextInputType.number,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
