@@ -246,8 +246,7 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                           CircularProgressIndicator(),
                         ],
                       )))
-                    : _card(model == null ? viewModel.contactNo : model!.phone!,
-                        'contacts', onTap: () async {
+                    : _card(viewModel.contactNo, 'contacts', onTap: () async {
                         // viewModel.selectContact(context);
                         // viewModel.setBusy(true);
                         // EncoreDialogs.showProgress(context,
@@ -259,18 +258,19 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                         if (viewModel.contact != null) {
                           viewModel.contactNo =
                               viewModel.contact!.phoneNumbers!.first;
-                          model!.phone = viewModel.contact!.phoneNumbers!.first;
-                          model!.name =
+                          // model!.phone = viewModel.contact!.phoneNumbers!.first;
+                          viewModel.contactName =
                               viewModel.getName(viewModel.contact!.fullName!);
                         } else {
                           viewModel.contactNo = 'Import Contact';
-                          model!.phone = 'Import Contact';
+                          viewModel.contactName = '';
+                          // model!.phone = 'Import Contact';
                         }
-                        if (model != null) {
-                          // model!.phone = viewModel.contact!.phoneNumbers!.first;
-                          // model!.name =
-                          //     viewModel.getName(viewModel.contact!.fullName!);
-                        }
+                        // if (model != null) {
+                        //   // model!.phone = viewModel.contact!.phoneNumbers!.first;
+                        //   // model!.name =
+                        //   //     viewModel.getName(viewModel.contact!.fullName!);
+                        // }
                         viewModel.notifyListeners();
                       }),
                 // if (viewModel.contact == null)

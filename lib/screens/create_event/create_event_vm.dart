@@ -31,6 +31,7 @@ class CreateEventViewModel extends BaseViewModel {
     print(model);
     if (model != null) {
       contactNo = model!.phone!;
+      contactName = model!.name!;
       removeTimeFromDate(model!.followupDateTime!);
     }
   }
@@ -80,6 +81,7 @@ class CreateEventViewModel extends BaseViewModel {
   // Contact? contact;
   String dateFormated = 'Select Date';
   String contactNo = 'Import Contact';
+  String contactName = '';
   String note = '';
   String name = '';
 
@@ -88,7 +90,7 @@ class CreateEventViewModel extends BaseViewModel {
   // final FlutterContactPicker contactPicker = FlutterContactPicker();
   // Contact? _contact;
 
-  Future<Contact> pickContact() async {
+  Future<Contact?> pickContact() async {
     // Get all contacts from the device
     bool checkPermission = await getContactsPermission();
     if (checkPermission) {
@@ -120,15 +122,17 @@ class CreateEventViewModel extends BaseViewModel {
       setBusy(false);
       return contact!;
     } else {
-      return EncoreDialogs.showErrorAlert(
-        context,
-        title: 'Error',
-        message: 'selected contact must be non-null',
-        onConfirm: () {
-          setBusy(false);
-          Navigator.pop(context);
-        },
-      );
+      setBusy(false);
+      return null;
+      // return EncoreDialogs.showErrorAlert(
+      //   context,
+      //   title: 'Error',
+      //   message: 'selected contact must be non-null',
+      //   onConfirm: () {
+      //     setBusy(false);
+      //     Navigator.pop(context);
+      //   },
+      // );
     }
   }
 
@@ -285,8 +289,8 @@ class CreateEventViewModel extends BaseViewModel {
       "note": noteController.text,
       "followup_date_time": formattedDateTime,
       "priority": model!.priority,
-      "name": model!.name,
-      "phone": model!.phone
+      "name": contactName,
+      "phone": contactNo
     };
     EncoreDialogs.showProgress(context, title: 'Updating Event');
     print(eventRequest);
