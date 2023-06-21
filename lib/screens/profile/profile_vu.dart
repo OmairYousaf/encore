@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../constants/constants.dart';
 import '../../widgets/appBar/encore_appbar.dart';
 import '../../widgets/buttons/action_button.dart';
@@ -53,7 +52,7 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
           children: [
             Text(
               'Profile',
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                   color: EncoreStyles.primaryColor),
@@ -79,7 +78,7 @@ class ProfileScreen extends ViewModelBuilderWidget<ProfileViewModel> {
             const SizedBox(height: 24),
             Text(
               viewModel.userName ?? 'Smith Wilimson',
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 color: EncoreStyles.primaryColor,
                 fontSize: 24,
                 fontWeight: FontWeight.w400,

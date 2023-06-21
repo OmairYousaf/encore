@@ -1,7 +1,6 @@
 import 'package:encore/constants/constants.dart';
 import 'package:flutter/material.dart';
 import '../buttons/action_button.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 //ignore: must_be_immutable
 class EncoreAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -49,7 +48,7 @@ class _EncoreAppBarState extends State<EncoreAppBar> {
                     width: 32,
                   ),
             Text(widget.title,
-                style: GoogleFonts.oswald(
+                style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w400,
                     color: EncoreStyles.whiteColor)

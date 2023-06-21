@@ -12,7 +12,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/constants.dart';
 import '../../widgets/appBar/encore_appbar.dart';
 import '../../widgets/buttons/action_button.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../profile/profile_vu.dart';
 import 'model/model.dart';
 
@@ -283,7 +282,7 @@ class CreateEventScreen extends ViewModelBuilderWidget<CreateEventViewModel> {
                 const SizedBox(height: 24),
                 Text(
                   'Set Your Follow Up Date and Time',
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       color: const Color(0xff000000)),

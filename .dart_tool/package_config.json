@@ -3,7 +3,7 @@
   "packages": [
     {
       "name": "async",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/async-2.10.0",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/async-2.11.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -33,7 +33,7 @@
     },
     {
       "name": "characters",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/characters-1.2.1",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/characters-1.3.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -45,9 +45,9 @@
     },
     {
       "name": "collection",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/collection-1.17.0",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/collection-1.17.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "connectivity_checker",
@@ -57,9 +57,9 @@
     },
     {
       "name": "crypto",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/crypto-3.0.2",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/crypto-3.0.3",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.19"
     },
     {
       "name": "cupertino_icons",
@@ -69,7 +69,7 @@
     },
     {
       "name": "dio",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/dio-5.1.1",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/dio-5.2.1+1",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
@@ -87,7 +87,7 @@
     },
     {
       "name": "ffi",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/ffi-2.0.1",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/ffi-2.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -99,15 +99,15 @@
     },
     {
       "name": "file_picker",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/file_picker-5.2.5",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/file_picker-5.3.2",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "flutter",
-      "rootUri": "file:///home/chi/development/flutter/packages/flutter",
+      "rootUri": "file:///home/chi/Flutter/flutter/packages/flutter",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_blurhash",
@@ -135,9 +135,9 @@
     },
     {
       "name": "flutter_plugin_android_lifecycle",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.9",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.15",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "flutter_slidable",
@@ -153,33 +153,27 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///home/chi/development/flutter/packages/flutter_test",
+      "rootUri": "file:///home/chi/Flutter/flutter/packages/flutter_test",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///home/chi/development/flutter/packages/flutter_web_plugins",
+      "rootUri": "file:///home/chi/Flutter/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "get_it",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/get_it-7.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "google_fonts",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/google_fonts-3.0.1",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/get_it-7.6.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "http",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/http-0.13.5",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/http-0.13.6",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.19"
     },
     {
       "name": "http_parser",
@@ -189,25 +183,25 @@
     },
     {
       "name": "intl",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/intl-0.18.0",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/intl-0.18.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "js",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/js-0.6.5",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/js-0.6.7",
       "packageUri": "lib/",
-      "languageVersion": "2.16"
+      "languageVersion": "2.19"
     },
     {
       "name": "lints",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/lints-2.0.1",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/lints-2.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "matcher",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/matcher-0.12.13",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/matcher-0.12.15",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -219,7 +213,7 @@
     },
     {
       "name": "meta",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/meta-1.8.0",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/meta-1.9.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -237,7 +231,7 @@
     },
     {
       "name": "path",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path-1.8.2",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path-1.8.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -255,45 +249,39 @@
     },
     {
       "name": "path_provider",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path_provider-2.0.11",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path_provider-2.0.15",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.17"
     },
     {
       "name": "path_provider_android",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path_provider_android-2.0.22",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path_provider_android-2.0.27",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.17"
     },
     {
-      "name": "path_provider_ios",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path_provider_ios-2.0.11",
+      "name": "path_provider_foundation",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path_provider_foundation-2.2.3",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.18"
     },
     {
       "name": "path_provider_linux",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path_provider_linux-2.1.7",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path_provider_linux-2.1.11",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "path_provider_macos",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path_provider_macos-2.0.7",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "path_provider_platform_interface",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path_provider_platform_interface-2.0.5",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path_provider_platform_interface-2.0.6",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "path_provider_windows",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path_provider_windows-2.1.3",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/path_provider_windows-2.1.7",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
       "name": "pedantic",
@@ -303,25 +291,25 @@
     },
     {
       "name": "permission_handler",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/permission_handler-10.2.0",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/permission_handler-10.3.0",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
     {
       "name": "permission_handler_android",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/permission_handler_android-10.2.0",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/permission_handler_android-10.2.3",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
     {
       "name": "permission_handler_apple",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/permission_handler_apple-9.0.7",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/permission_handler_apple-9.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
     {
       "name": "permission_handler_platform_interface",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/permission_handler_platform_interface-3.9.0",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/permission_handler_platform_interface-3.10.0",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
@@ -333,9 +321,9 @@
     },
     {
       "name": "petitparser",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/petitparser-5.1.0",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/petitparser-5.4.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "2.19"
     },
     {
       "name": "platform",
@@ -345,9 +333,9 @@
     },
     {
       "name": "plugin_platform_interface",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.3",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.4",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "process",
@@ -369,19 +357,19 @@
     },
     {
       "name": "shared_preferences",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/shared_preferences-2.1.0",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/shared_preferences-2.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.18"
     },
     {
       "name": "shared_preferences_android",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/shared_preferences_android-2.1.0",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/shared_preferences_android-2.1.4",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "shared_preferences_foundation",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.2.0",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.2.2",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -411,9 +399,9 @@
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///home/chi/development/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///home/chi/Flutter/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "source_span",
@@ -423,13 +411,13 @@
     },
     {
       "name": "sqflite",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/sqflite-2.2.8",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/sqflite-2.2.8+4",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "sqflite_common",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/sqflite_common-2.4.5",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/sqflite_common-2.4.5+1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -441,13 +429,13 @@
     },
     {
       "name": "stacked",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/stacked-3.1.0+2",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/stacked-3.4.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
-      "name": "stacked_core",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/stacked_core-1.2.4",
+      "name": "stacked_shared",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/stacked_shared-1.3.2",
       "packageUri": "lib/",
       "languageVersion": "2.16"
     },
@@ -477,21 +465,21 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/test_api-0.4.16",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/test_api-0.5.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "typed_data",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/typed_data-1.3.1",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/typed_data-1.3.2",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "universal_io",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/universal_io-2.0.4",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/universal_io-2.2.2",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "uuid",
@@ -507,21 +495,21 @@
     },
     {
       "name": "win32",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/win32-3.1.3",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/win32-5.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "xdg_directories",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/xdg_directories-1.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
-      "name": "xdg_directories",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/xdg_directories-0.2.0+3",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "xml",
-      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/xml-6.2.2",
+      "rootUri": "file:///home/chi/.pub-cache/hosted/pub.dev/xml-6.3.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "2.19"
     },
     {
       "name": "encore",
@@ -530,7 +518,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-04-30T11:01:13.573449Z",
+  "generated": "2023-06-20T19:10:07.591955Z",
   "generator": "pub",
-  "generatorVersion": "2.19.6"
+  "generatorVersion": "3.0.1"
 }

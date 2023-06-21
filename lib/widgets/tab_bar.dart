@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class EncoreTabBar extends StatelessWidget {
   final int length;
@@ -22,8 +21,8 @@ class EncoreTabBar extends StatelessWidget {
                 children: [
                   TabBar(
                     isScrollable: true,
-                    labelStyle: GoogleFonts.poppins(
-                        fontSize: 18, fontWeight: FontWeight.w500),
+                    labelStyle:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     indicatorColor: const Color(0xff000000),
                     labelColor: const Color(0xff282828),
                     unselectedLabelColor: const Color(0xffC2C2C2),

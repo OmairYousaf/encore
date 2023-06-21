@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../constants/constants.dart';
 import '../../widgets/buttons/action_button.dart';
 
@@ -42,7 +41,7 @@ class UpdatePasswordScreen
                   alignment: Alignment.center,
                   child: Text(
                     'Update Your Password',
-                    style: GoogleFonts.poppins(
+                    style: TextStyle(
                       color: EncoreStyles.primaryColor,
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
@@ -148,7 +147,7 @@ class UpdatePasswordScreen
             //   fit: BoxFit.scaleDown,
             // ),
             suffixIcon: suffixIcon,
-            hintStyle: GoogleFonts.poppins(
+            hintStyle: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w400,
                 color: EncoreStyles.primaryColor),

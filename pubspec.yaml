@@ -50,7 +50,7 @@ dev_dependencies:
     sdk: flutter
   stacked: ^3.1.0+2
   flutter_svg: ^1.1.6
-  google_fonts: ^3.0.1
+  # google_fonts: ^3.0.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
